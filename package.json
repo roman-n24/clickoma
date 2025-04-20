@@ -1,0 +1,30 @@
+{
+  "name": "products",
+  "version": "1.0.0",
+  "description": "Ethernet-shop for bying top products",
+  "keywords": [
+    "products"
+  ],
+  "homepage": "https://github.com/Nerdffff/products#readme",
+  "bugs": {
+    "url": "https://github.com/Nerdffff/products/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nerdffff/products.git"
+  },
+  "license": "ISC",
+  "author": "Roman",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "live-server": "live-server",
+    "build": "rollup -c --watch"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "eslint": "^9.25.0",
+    "globals": "^16.0.0",
+    "rollup-plugin-import-css": "^3.5.8"
+  }
+}
