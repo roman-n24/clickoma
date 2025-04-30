@@ -1,0 +1,137 @@
+.header__wrapper {
+    background-color: var(--blue);
+}
+
+.header__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+}
+
+.info-text, .s-networks__title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--white);
+}
+
+.s-networks {
+    display: flex;
+    align-items: center;
+}
+
+.s-networks__icons {
+    display: flex;
+    list-style: none;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.s-networks__icons li a {
+    display: flex;
+    align-items: center;
+}
+
+.s-networks__mes-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.s-networks__title {
+    margin-right: 12px;
+}
+
+.br-vertical {
+    border: 1px solid var(--white);
+    margin: 0 24px;
+    height: 28px;
+    opacity: 0.1;
+}
+
+.sel-currency {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.sel-currency > select {
+    color: var(--white);
+    background: transparent;
+    border: none;
+    margin-right: 2%;
+    width: 47px;
+    height: 40px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.sel-currency::after {
+    content: url(/static/icons/caret-down.svg);
+    margin-left: -14px;
+    pointer-events: none;
+}
+
+select option {
+    background: var(--white);
+    color: var(--gray);
+    border: 0;
+    padding-right: 15px;
+}
+
+select option:checked {
+    color: var(--orange);
+    background-color: var(--white);
+}
+
+.header__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.search {
+    position: relative;
+}
+
+.search__body {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 143%;
+    border-radius: 2px;
+    padding: 14px 20px;
+    width: 646px;
+    height: 48px;
+    border: none;
+}
+
+.search__btn {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}
+
+.icons {
+    display: flex;
+    gap: 24px;
+}
+
+.icons div {
+    display: flex;
+    align-items: center;
+}
+
+.icons__cart {
+    position: relative;
+}
+
+.notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}

@@ -1,0 +1,31 @@
+.nav__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.category-list {
+    list-style: none;
+    background: var(--light-gray);
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(3, 250px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.category-list li {
+    padding: 8px 16px;
+    text-align: center;
+}
+
+.category-btn {
+    font-weight: 500;
+    border-radius: 2px;
+    padding: 14px 24px;
+    color: var(--dark-gray);
+    background: var(--light-gray);
+}

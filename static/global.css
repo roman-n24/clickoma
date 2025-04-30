@@ -1,0 +1,24 @@
+:root {
+    --white: #FFFFFF;
+    --blue: #1B6392;
+    --light-gray: #F2F4F5;
+    --border-gray: #E4E7E9;
+    --gray: #5F6C72;
+    --dark-gray: #191C1F;
+    --orange: #FA8232;
+
+    --layout-width: 1320px;
+}
+
+#root {
+    max-width: var(--layout-width);
+    margin: 0 auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}

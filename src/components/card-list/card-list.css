@@ -1,0 +1,14 @@
+.card-list__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.card-list__loading {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 143%;
+    display: flex;
+    justify-content: center;
+    color: var(--dark-gray);
+}

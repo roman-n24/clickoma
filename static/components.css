@@ -1,0 +1,14 @@
+.btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+}
+
+.hr_horizontal {
+    opacity: 0.3;
+    margin: 0;
+}
