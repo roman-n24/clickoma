@@ -20,13 +20,19 @@ export class Header extends DivComponent {
                             <div class="s-networks__title">Follow us:</div>
                             <ul class="s-networks__icons">
                                 <li>
-                                    <a href="#"><img src="./static/icons/instagram.svg" alt="Instagram"></a>
+                                    <a href="https://www.instagram.com/irina_nugumanova/">
+                                        <img src="./static/icons/instagram.svg" alt="Instagram">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="./static/icons/reddit.svg" alt="Reddit"></a>
+                                    <a href="https://www.reddit.com/user/Late_Q/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button">
+                                        <img src="./static/icons/reddit.svg" alt="Reddit">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="./static/icons/youtube.svg" alt="Youtube"></a>
+                                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                                        <img src="./static/icons/youtube.svg" alt="Youtube">
+                                    </a>
                                 </li>
                             </ul>
                         </div>

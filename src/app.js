@@ -1,19 +1,19 @@
 import { CartView } from './views/cart'
 import { CategoryProductsView } from './views/category-products'
 import { MainView } from './views/main'
-import { ProductView } from './views/product'
+import { CardView } from './views/card'
 
 class App {
     routes = [
         { path: '', view: MainView },
         { path: '#cart', view: CartView },
-        { path: '#product', view: ProductView },
+        { path: '#product', view: CardView },
         { path: '#category', view: CategoryProductsView }
     ]
     appState = {
         cart: [],
-        slashName: undefined,
-        categories: []
+        categories: [],
+        slashName: undefined
     }
 
     constructor() {

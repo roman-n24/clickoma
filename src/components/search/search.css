@@ -1,0 +1,20 @@
+.search {
+    position: relative;
+}
+
+.search__body {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 143%;
+    border-radius: 2px;
+    padding: 14px 20px;
+    width: 646px;
+    height: 48px;
+    border: none;
+}
+
+.search__btn {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}

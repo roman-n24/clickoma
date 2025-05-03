@@ -15,12 +15,12 @@ export class Card extends DivComponent {
             </div>
             <div class="card__footer">
                 <div class="card__rating_wrap">
-                    <ul class="card__rating">
-                        ${this.generateStars()}
+                    <ul class="card-rating">
+                        ${this.renderStars()}
                     </ul>
                     <div>(${this.product.reviews.length})</div>
                 </div>
-                <div class="card__title">${this.product.title}</div>
+                <a href="#product/id=${this.product.id}" class="card__title">${this.product.title}</a>
                 <div class="card__price">${this.product.price} $</div>
             </div>
         `
@@ -28,7 +28,7 @@ export class Card extends DivComponent {
         return this.element
     }
 
-    generateStars() {
+    renderStars() {
         let starsHTML = ''
         const primaryStars = Math.round(this.product.rating)
 

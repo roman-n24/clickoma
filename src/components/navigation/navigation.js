@@ -37,11 +37,8 @@ export class Navigation extends DivComponent {
     renderCategories() {
         if(!this.appState.categories) {
             const notFoundCategories = '<div class="not-found">Categories not found!</div>'
-            console.log(notFoundCategories)
             return notFoundCategories
         }
-        
-        console.log('d')
 
         const categories = this.appState.categories
 

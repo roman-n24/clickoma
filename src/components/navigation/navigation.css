@@ -16,7 +16,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
+    width: 50%;
     list-style: none;
     background: var(--white);
     margin: 0;
@@ -39,10 +39,6 @@
     padding: 14px 24px;
     color: var(--dark-gray);
     background: var(--light-gray);
-}
-
-.category {
-
 }
 
 .category a {
