@@ -3,13 +3,13 @@ import { Card } from '../card/card';
 import './card-list.css'
 
 export class CardList extends DivComponent {
-    constructor(state) {
+    constructor(stateManager) {
         super()
-        this.state = state
+        this.stateManager = stateManager
     }
 
     render() {
-        if(this.state.loading) {
+        if(this.stateManager.state.loading) {
             this.element.innerHTML = `
                 <div class="card-list__loading">Loading...</div>
             `
@@ -19,16 +19,16 @@ export class CardList extends DivComponent {
 
         this.element.classList.add('card-list')
 
-        if(this.state.searchQuery) {
+        if(this.stateManager.state.searchQuery) {
             this.element.innerHTML = `
-                <div class="card-list__title">Найдено товаров - ${this.state.numFound}</div>
+                <div class="card-list__title">Найдено товаров - ${this.stateManager.state.numFound}</div>
             `
         }
 
         const cardGrid = document.createElement('div')
         cardGrid.classList.add('card-list__grid')
 
-        for(const product of this.state.list) {
+        for(const product of this.stateManager.state.list) {
             cardGrid.append(new Card(product).render())
         }
 

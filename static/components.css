@@ -12,3 +12,14 @@
     opacity: 0.3;
     margin: 0;
 }
+
+.hidden_anim {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease, height 0.2s ease;
+}
+
+.hidden {
+    display: none !important;
+}

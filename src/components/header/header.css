@@ -1,3 +1,9 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
 .header__wrapper {
     background-color: var(--blue);
 }
@@ -43,7 +49,7 @@
     margin-right: 12px;
 }
 
-.br-vertical {
+.hr-vertical {
     border: 1px solid var(--white);
     margin: 0 24px;
     height: 28px;

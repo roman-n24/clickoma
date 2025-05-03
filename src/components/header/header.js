@@ -10,9 +10,8 @@ export class Header extends DivComponent {
     }
 
     render() {
-        const header = document.createElement('header')
-        header.classList.add('header')
-        header.innerHTML = `
+        this.element.classList.add('header')
+        this.element.innerHTML = `
             <div class="header__wrapper">
                 <div class="header__info">
                     <div class="info-text">Welcome to Clicon online eCommerce store. </div>
@@ -31,7 +30,7 @@ export class Header extends DivComponent {
                                 </li>
                             </ul>
                         </div>
-                        <div class="br-vertical"></div>
+                        <div class="hr-vertical"></div>
                         <div class="sel-currency">
                             <select name="currency" id="currency-id">
                                 <option value="usd">USD</option>
@@ -66,7 +65,16 @@ export class Header extends DivComponent {
             </div>
         `
 
-        this.element.append(header)
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 0) {
+                this.element.querySelector('.header__info').classList.add('hidden')
+                this.element.querySelector('.hr_horizontal').classList.add('hidden')
+            } else {
+                this.element.querySelector('.header__info').classList.remove('hidden')
+                this.element.querySelector('.hr_horizontal').classList.remove('hidden')
+
+            }
+        })
 
         const search = this.element.querySelector('.search_wrap')
         search.append(this.renderSearch())

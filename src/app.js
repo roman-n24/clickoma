@@ -8,15 +8,36 @@ class App {
         { path: '', view: MainView },
         { path: '#cart', view: CartView },
         { path: '#product', view: ProductView },
-        { path: '#categories', view: CategoryProductsView }
+        { path: '#category', view: CategoryProductsView }
     ]
     appState = {
         cart: [],
+        slashName: undefined,
+        categories: []
     }
 
     constructor() {
         window.addEventListener('hashchange', this.route.bind(this))
+        this.loadCategory()
         this.route()
+    }
+
+    loadCategory = async () => {
+        try {
+            const res = await fetch(`https://dummyjson.com/products/categories`)
+
+            if (!res.ok) {
+                throw new Error(`HTTP ошибка: ${res.status}`);
+            }
+
+            this.appState.categories = await res.json()
+
+            if (!Array.isArray(this.appState.categories)) {
+                throw new Error('Неверный формат данных: ожидался массив');
+            }
+        } catch (err) {
+            console.error(err.message)
+        }
     }
 
     route() {
@@ -24,10 +45,15 @@ class App {
             this.currentView.destroy()
         }
 
-        const hash = location.hash.split('/')[0]
-        console.log(hash)
+        const url = location.hash.split('/')
 
-        const view = this.routes.find(route => route.path === hash)?.view
+        if(url.length > 0) {
+            this.appState.slashName = url[1]
+        }
+
+        console.log(url)
+
+        const view = this.routes.find(route => route.path === url[0])?.view
 
         if(view === undefined) {
             return console.error('View undefined!')

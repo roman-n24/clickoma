@@ -21,7 +21,7 @@ export class Card extends DivComponent {
                     <div>(${this.product.reviews.length})</div>
                 </div>
                 <div class="card__title">${this.product.title}</div>
-                <div class="card__price">${this.product.price}</div>
+                <div class="card__price">${this.product.price} $</div>
             </div>
         `
 

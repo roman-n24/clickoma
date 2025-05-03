@@ -1,5 +1,6 @@
+import onChange from 'on-change';
+
 import { AbstractView } from '../common/view';
-// import { Category } from '../components/category/category';
 import { Header } from '../components/header/header';
 
 export class CartView extends AbstractView {
@@ -8,11 +9,14 @@ export class CartView extends AbstractView {
         this.appState = appState
     }
 
+    destroy() {
+        onChange.unsubscribe(this.appState)
+    }
+
     render() {
         this.app.innerHTML = ''
         const main = document.createElement('div')
         main.classList.add('main')
-        // main.append(new Category().render())
         
         this.app.append(main)
         this.app.prepend(this.renderHeader())
