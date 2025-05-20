@@ -3,8 +3,9 @@ import { Card } from '../card/card';
 import './card-list.css'
 
 export class CardList extends DivComponent {
-    constructor(stateManager) {
+    constructor(appState, stateManager) {
         super()
+        this.appState = appState
         this.stateManager = stateManager
     }
 
@@ -19,9 +20,9 @@ export class CardList extends DivComponent {
 
         this.element.classList.add('card-list')
 
-        if(this.stateManager.state.searchQuery) {
+        if(this.appState.searchQuery) {
             this.element.innerHTML = `
-                <div class="card-list__title">Найдено товаров - ${this.stateManager.state.numFound}</div>
+                <div class="card-list__title">Найдено товаров - ${this.appState.numFound}</div>
             `
         }
 
@@ -29,7 +30,7 @@ export class CardList extends DivComponent {
         cardGrid.classList.add('card-list__grid')
 
         for(const product of this.stateManager.state.list) {
-            cardGrid.append(new Card(product).render())
+            cardGrid.append(new Card(this.appState, product).render())
         }
 
         this.element.append(cardGrid)

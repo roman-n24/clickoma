@@ -53,13 +53,9 @@ export class Header extends DivComponent {
                     <div class="icons">
                         <div class="icons__cart">
                             <a href="#cart">
-                                <img src="./static/icons/cart-simple.svg" alt="Корзина покупок">
-                                <img 
-                                    src="./static/icons/cart-notification.svg" 
-                                    alt="Уведомление" 
-                                    class="notification"
-                                >
+                                <img src="./static/icons/cart.svg" alt="Корзина покупок">
                             </a>
+                            <div class="cart-products-count">${this.appState.cart.length}</div>
                         </div>
                         <div class="icons__profile">
                             <a href="#profile">
@@ -89,7 +85,7 @@ export class Header extends DivComponent {
     }
 
     renderSearch() {
-        const search = new Search(this.state)
+        const search = new Search(this.appState)
         return search.render()
     }
 }

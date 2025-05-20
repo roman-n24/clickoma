@@ -1,0 +1,23 @@
+.card-product-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 48px; 
+}
+
+.card-product-count {
+    border: 2px solid var(--border-gray);
+    border-radius: 3px;
+    padding: 0 auto; 
+    gap: 38px;
+    flex: 0 0 auto;
+    min-width: 140px;
+}
+
+.card-product-count__btn-plus, 
+.card-product-count__btn-min {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}

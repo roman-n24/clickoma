@@ -1,172 +1,141 @@
-import { DivComponent } from '../../common/div-component';
 import './card-details.css'
+import { DivComponent } from '../../common/div-component';
+import { StarsReview } from '../stars-review/stars-review';
 
 export class CardDetails extends DivComponent {
-    constructor(parentState) {
+    constructor(appState, parentStateManager) {
         super()
-        this.parentState = parentState
-    }
-    
-    // Вопрос: можно ли как-нибудь это реализовать, но через сеттеры и геттеры, чтобы оптимизировать данную функцию?
-    // Это неправильно. Нужно переделать, но не по тупому.
-    cardCounter() {
-        let count = 1
-        const minBtn = document.querySelector('.card-product-count__btn-min')
-        const plusBtn = document.querySelector('.card-product-count__btn-plus')
-
-        minBtn.addEventListener('click', () => {
-            if(count > 1) { 
-                count -= 1
-            }
-        })
-
-        plusBtn.addEventListener('click', () => {
-            if(count < this.parentState.productData.stock) { 
-                count += 1
-            }
-        })
+        this.appState = appState
+        this.parentStateManager = parentStateManager
     }
 
-    renderStars() {
-        let starsHTML = ''
-        const primaryStars = Math.round(this.parentState.productData.rating)
+    #addFromCart = () => {
+        this.appState.cart.push(this.parentStateManager.state.product)
+    }
 
-        for(let i = 0; i < primaryStars; i++) {
-            starsHTML += '<li class="star_primary"><img src="./static/icons/star-primary.svg"/></li>'
-        }
+    #deleteFromCart = () => {
+        this.appState.cart = this.appState.cart.filter(product => product.id !== this.parentStateManager.state.product.id)
+    }
 
-        const emptyStars = 5 - primaryStars
+    get isInCart() {
+        return this.appState.cart.find(product => 
+            product.id === this.parentStateManager.state.product.id
+        )
+    }
 
-        for(let i = 0; i < emptyStars; i++) {
-            starsHTML += '<li class="star_empty"><img src="/static/icons/star-empty.svg"/></li>'
-        }
-
-        return starsHTML
+    get imageId() {
+        return +(this.parentStateManager.state.activeImage.split('/').at(-1).split('.')[0]) - 1
     }
 
     renderCardImages() {
-        let imgHTML = ''
-        for(const img of this.parentState.productData.images) {
-            imgHTML += `
-                <li>
-                    <button class="card-represent-list__btn">
-                        <img
-                            src="${img}" 
-                            alt=""
-                        >
-                    </button>
-                </li>
-            `
-        }
-
-        return imgHTML
+        return this.parentStateManager.state.product.images.map((img, i) => {
+            return `<li>
+                <button class="card-represent-list__btn btn ${i === this.imageId ? 'mini-img_active' : ''}">
+                    <img
+                        src="${img}"
+                        alt=""
+                    >
+                </button>
+            </li>`
+        }).join('')
     }
 
     render() {
-        this.element.classList.add('.card-details')
+        this.element.classList.add('card-details')
 
-        if(this.parentState.loading) {
+        if(this.parentStateManager.state.loading) {
             this.element.innerHTML = `
                 <div class="card-list__loading">Loading...</div>
             `
             return this.element
         }
 
+        const discountPrice = (this.parentStateManager.state.product.price 
+            * (1 - this.parentStateManager.state.product.discountPercentage / 100)).toFixed(2)
+
         this.element.innerHTML = `
             <div class="card-details__wrapper">
                 <div class="card-details__represent">
-                    <button class="arrow-left_ghost" >
-                        <img
-                            src="./static/icons/arrow-circle-left.svg" 
-                            alt=""
-                        >
-                    </button>
                     <img class="card-details__img"
-                        src="${this.parentState.productData.images[0]}" 
+                        src="${this.parentStateManager.state.activeImage}"
                         alt=""
                     >
-                    <button class="arrow-right_ghost" >
-                        <img
-                            src="./static/icons/arrow-circle-right.svg" 
-                            alt=""
-                        >
-                    </button>
                 </div>
-                <div class="card-details__images">
-                    <button><img 
-                        class="arrow-left_primary" 
-                        src="./static/icons/arrow-circle-left-prime.svg" 
-                        alt=""
-                    ></button>
-                    <ul class="card-represent-list">
-                        ${this.renderCardImages()}
-                    </ul>
-                    <button><img 
-                        class="arrow-right_primary" 
-                        src="./static/icons/arrow-circle-right-prime.svg" 
-                        alt=""
-                    ></button>
-                </div>
+                <ul class="card-represent-list">
+                    ${this.renderCardImages()}
+                </ul>
                 <div class="card-details__info">
                     <div class="card-feedback">
                         <ul class="card-rating">
-                            ${this.renderStars()}
+                            ${new StarsReview(this.parentStateManager.state.product).render()}
                         </ul>
                         <span class="card-feedback__info">
-                            ${this.parentState.productData.rating}
+                            ${this.parentStateManager.state.product.rating} Star Rating
                         </span>
                         <span class="card-feedback__description">
-                            (${this.parentState.productData.reviews.length} User feedback)
+                            (${this.parentStateManager.state.product.reviews.length} User feedback)
                         </span>
                     </div>
                     <div class="card-title">
-                        ${this.parentState.productData.title}
+                        ${this.parentStateManager.state.product.title}
                     </div>
                     <ul class="card-info">
                         <li class="card-info__text">
-                            Sku: ${this.parentState.productData.sku}
+                            Sku: <span class="card-info__primary">${this.parentStateManager.state.product.sku || '-'}</span>
                         </li>
                         <li class="card-info__text">
-                            Brand: ${this.parentState.productData.brand}
+                            Brand: <span class="card-info__primary">${this.parentStateManager.state.product.brand || '-'}</span>
                         </li>
                         <li class="card-info__text">
-                            Availability: ${this.parentState.productData.availabilityStatus}
+                            Availability: <span class="card-info__primary">${this.parentStateManager.state.product.availabilityStatus || '-'}</span>
                         </li>
                         <li class="card-info__text">
-                            Category: ${this.parentState.productData.category}
+                            Category: <span class="card-info__primary">${this.parentStateManager.state.product.category || '-'}</span>
                         </li>
                     </ul>
                     <div class="card-price">
                         <span class="card-price__sale-price sale-price">
-                            ${
-                                this.parentState.productData.price 
-                                    - (this.parentState.productData.price 
-                                    % this.parentState.productData.discountPercentage)
-                            }
+                            ${discountPrice}$
                         </span>
                         <span class="card-price__init-price init-price">
-                            ${this.parentState.productData.price}
+                            ${this.parentStateManager.state.product.price}$
                         </span>
                         <span class="card-price__sale sale">
-                            ${this.parentState.productData.discountPercentage}% OFF
+                            ${this.parentStateManager.state.product.discountPercentage}% OFF
                         </span>
                     </div>
                     <hr class="hr_horizontal">
-                    <div class="card-product-count">
-                        <button class="card-product-count__btn-min btn">-</button>
-                        <span class="card-product-count__num"></span>
-                        <button class="card-product-count__btn-plus btn">+</button>
+                    <div class="card-product_wrapper">
+                        <button class="card-cart-btn btn ${this.isInCart ? 'active-btn' : ''}">
+                            ${this.isInCart ? 'Remove from cart' : 'Add to card'}
+                            <img src="./static/icons/cart.svg" alt="">
+                        </button>
+                        <button class="card-buy-btn btn">Buy now</button>
                     </div>
-                    <button class="card-cart-btn btn">
-                        Add to card
-                        <img src="./static/icons/cart-simple.svg" alt="">
-                    </button>
-                    <button class="card-buy-btn btn"></button>
                 </div>
             </div>
         `
 
-        console.log(this.parentState.productData.discountPercentage)
+        const representList = this.element.querySelector('.card-represent-list')
+        const addToCartBtn = this.element.querySelector('.card-cart-btn')
+        
+        representList.addEventListener('mouseover', (e) => {
+            if(e.target.tagName === 'IMG') {
+                const parentBtn = e.target.closest('.card-represent-list__btn')
+                const allBtnImages = this.element.querySelectorAll('.card-represent-list__btn');
+
+                allBtnImages.forEach((btn) => {
+                    btn.classList.remove('mini-img_active')
+                })
+
+                parentBtn.classList.add('mini-img_active')
+                this.parentStateManager.state.activeImage = e.target.src
+            }
+        })
+
+        addToCartBtn.addEventListener('click', this.isInCart 
+            ? this.#deleteFromCart
+            : this.#addFromCart)
 
         return this.element
     }

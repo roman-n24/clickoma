@@ -112,8 +112,17 @@ select option:checked {
     position: relative;
 }
 
-.notification {
+.cart-products-count {
+    width: 20px;
+    height: 20px;
+    border-radius: 90%;
+    background: var(--white);
     position: absolute;
     top: -5px;
     right: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue);
+    pointer-events: none;
 }

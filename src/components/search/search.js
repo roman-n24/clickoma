@@ -2,14 +2,14 @@ import { DivComponent } from '../../common/div-component';
 import './search.css'
 
 export class Search extends DivComponent {
-    constructor(stateManager) {
+    constructor(appState) {
         super()
-        this.stateManager = stateManager
+        this.appState = appState
     }
 
     searchInput = () => {
         const searchValue = document.querySelector('.search__body').value
-        this.stateManager.state.searchQuery = searchValue
+        this.appState.searchQuery = searchValue
     }
 
     render() {

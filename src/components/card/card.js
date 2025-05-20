@@ -1,47 +1,75 @@
 import { DivComponent } from '../../common/div-component';
+import { StarsReview } from '../stars-review/stars-review';
 import './card.css'
 
 export class Card extends DivComponent {
-    constructor(product) {
+    constructor(appState, product) {
         super()
+        this.appState = appState
         this.product = product
+    }
+
+    get isInCart() {
+        return this.appState.cart.find(product => 
+            product.id === this.product.id
+        )
+    }
+
+    #addFromCart = () => {
+        this.appState.cart.push(this.product)
+        console.log('add')
+    }
+
+    #deleteFromCart = () => {
+        this.appState.cart = this.appState.cart.filter(product => product.id !== this.product.id)
+        console.log('delete')
     }
 
     render() {
         this.element.classList.add('card')
         this.element.innerHTML = `
-            <div class="card__img">
+            <a href="#product/id=${this.product.id}" class="card__img">
                 <img src="${this.product.images[0]}" alt="">
-            </div>
-            <div class="card__footer">
+            </a>
+            <div class="card__body">
                 <div class="card__rating_wrap">
                     <ul class="card-rating">
-                        ${this.renderStars()}
+                        ${new StarsReview(this.product).render()}
                     </ul>
-                    <div>(${this.product.reviews.length})</div>
+                    <div class="reviews-length">(${this.product.reviews.length})</div>
                 </div>
                 <a href="#product/id=${this.product.id}" class="card__title">${this.product.title}</a>
                 <div class="card__price">${this.product.price} $</div>
             </div>
+            <div class="card__footer">
+                <div>Add to cart</div>
+            </div>
+            <div class="card__popup">
+                <button class="card-footer-btn">
+                    ${this.isInCart 
+                        ? `<img src="./static/icons/prohibit.svg" alt="Prohibit">`
+                        : `<img src="./static/icons/cart.svg" alt="Cart">`
+                    }
+                </button>
+            </div>
         `
 
+        const cardFooter = this.element.querySelector('.card__footer')
+        const cardPopup = this.element.querySelector('.card__popup')
+        const addToCartBtn = this.element.querySelector('.card-footer-btn')
+
+        cardFooter.addEventListener('mouseover', () => {
+            cardPopup.style = 'display: flex;'
+        })
+
+        this.element.addEventListener('mouseleave', () => {
+            cardPopup.style = 'display: none;'
+        })
+
+        addToCartBtn.addEventListener('click', this.isInCart 
+            ? this.#deleteFromCart
+            : this.#addFromCart)
+
         return this.element
-    }
-
-    renderStars() {
-        let starsHTML = ''
-        const primaryStars = Math.round(this.product.rating)
-
-        for(let i = 0; i < primaryStars; i++) {
-            starsHTML += '<li class="star_primary"><img src="./static/icons/star-primary.svg"/></li>'
-        }
-
-        const emptyStars = 5 - primaryStars
-
-        for(let i = 0; i < emptyStars; i++) {
-            starsHTML += '<li class="star_empty"><img src="/static/icons/star-empty.svg"/></li>'
-        }
-
-        return starsHTML
     }
 }

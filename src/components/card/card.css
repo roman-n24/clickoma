@@ -1,6 +1,8 @@
 .card {
     padding: 16px;
     border: 1px solid var(--border-gray);
+    border-radius: 3px;
+    position: relative;
 }
 
 .card__img {
@@ -11,14 +13,65 @@
     height: 200px;
 }
 
-.card__rating_wrap {
-    display: flex;
+.reviews-length {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 133%;
+    color: var(--gray-price);
 }
 
-.card-rating {
-    list-style: none;
-    margin: 0;
-    margin-right: 4px;
-    padding: 0;
-    display: flex;
+.card__title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    text-decoration: none;
+    color: var(--dark-gray);
+}
+
+.card__price {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--light-blue);
+}
+
+.card__body {
+    margin-bottom: 24px;
+}
+
+.card__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--light-gray);
+    border-radius: 3px;
+    padding: 4px 12px;
+    text-align: center;
+}
+
+.card__popup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(54, 54, 54, 0.5);
+    display: none;
+    width: 100%;
+    height: 100%;
+    order: 3;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.card-footer-btn {
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card-footer-btn img {
+    width: 60px;
+    height: 60px;
 }

@@ -10,13 +10,38 @@ export class CategoryProductsView extends AbstractView {
     constructor(appState) {
         super()
         this.appState = appState
-        this.stateManager = new StateManager({}, this.render.bind(this))
+        this.appState = onChange(this.appState, this.appStateHook)
+        this.stateManager = new StateManager({}, this.stateHook)
         this.loadListCategory()
     }
 
+    appStateHook = (path) => {
+        if(path === 'cart') {
+            this.render()
+        }
+    }
+
+    stateHook = async (path) => {
+        if (path === 'searchQuery' || path === 'skip' || path === 'limit') {
+            console.log('state hook in main.js')
+            this.stateManager.state.loading = true;
+            const data = await this.appState.loadList(
+                this.appState.searchQuery || '',
+                this.appState.skip,
+                this.appState.limit
+            );
+            this.appState.numFound = data.products.length;
+            this.stateManager.state.loading = false;
+            this.stateManager.state.list = data.products;
+        }
+        if (path === 'list' || path === 'loading') {
+            this.render();
+        }
+    };
+
     destroy() {
         onChange.unsubscribe(this.appState)
-        this.stateManager.destroy()
+        this.stateManager.destroy();
     }
 
     loadListCategory = async () => {
@@ -38,7 +63,7 @@ export class CategoryProductsView extends AbstractView {
         const main = document.createElement('div')
         main.classList.add('main')
         main.prepend(new Navigation(this.appState).render())
-        main.append(new CardList(this.stateManager).render())
+        main.append(new CardList(this.appState, this.stateManager).render())
         
         this.app.append(main)
         this.app.prepend(this.renderHeader())

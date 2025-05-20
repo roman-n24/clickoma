@@ -1,11 +1,14 @@
 :root {
     --white: #FFFFFF;
+    --light-blue: #2DA5F3;
     --blue: #1B6392;
     --light-gray: #F2F4F5;
     --border-gray: #E4E7E9;
     --gray: #5F6C72;
+    --gray-price: #77878F;
     --dark-gray: #191C1F;
     --orange: #FA8232;
+    --yellow-warning: #EFD33D;
 
     --layout-width: 1320px;
 }
@@ -17,6 +20,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Public Sans', sans-serif;
 }
 
 body {

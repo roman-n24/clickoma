@@ -2,6 +2,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, auto);
+    gap: 24px 56px;
+    padding: 32px 0;
 }
 
 .card-details__info {
@@ -12,21 +14,9 @@
 }
 
 .card-details__represent {
-    position: relative;
     text-align: center;
-}
-
-.arrow-left_ghost, .arrow-right_ghost {
-    position: absolute;
-    top: 50%;
-}
-
-.arrow-left_ghost {
-    left: 0;
-}
-
-.arrow-right_ghost {
-    right: 0;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
 }
 
 .card-details__img {
@@ -37,9 +27,131 @@
 .card-represent-list {
     display: flex;
     gap: 8px;
+    justify-content: center;
 }
 
 .card-represent-list__btn > img {
     width: 96px;
     height: 96px;
+}
+
+.card-represent-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card-represent-list__btn {
+    border: 1px solid var(--border-gray);
+    border-radius: 2px;
+}
+
+.card-feedback {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.card-feedback__info {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--dark-gray);
+}
+
+.card-feedback__description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--gray);
+}
+
+.card-title {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 140%;
+    color: var(--dark-gray);
+    margin-bottom: 16px;
+}
+
+.card-info {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px 0;
+    margin-bottom: 24px;
+}
+
+.card-info__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--gray);
+}
+
+.card-info__primary {
+    color: var(--dark-gray);
+}
+
+.card-price {
+    margin-bottom: 30px;
+}
+
+.card-price__sale-price {
+    margin-right: 4px;
+    font-size: 24px;
+}
+
+.card-price__init-price {
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+.card-price__sale {
+    font-size: 14px;
+}
+
+.card-product_wrapper {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-cart-btn {
+    background: var(--orange);
+    border-radius: 3px;
+    padding: 0 81px;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    gap: 12px;
+    color: var(--white);
+    flex: 1;
+    max-width: 300px;
+}
+
+.card-buy-btn {
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 2px solid var(--orange);
+    border-radius: 3px;
+    color: var(--orange);
+    padding: 0 32px; 
+    flex: 0 0 auto; 
+}
+
+.card-cart-btn, 
+.card-buy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 48px; 
 }
