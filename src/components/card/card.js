@@ -18,11 +18,13 @@ export class Card extends DivComponent {
     #addFromCart = () => {
         this.appState.cart.push(this.product)
         console.log('add')
+        console.log(this.appState.cart)
     }
 
     #deleteFromCart = () => {
         this.appState.cart = this.appState.cart.filter(product => product.id !== this.product.id)
         console.log('delete')
+        console.log(this.appState.cart)
     }
 
     render() {

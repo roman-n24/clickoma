@@ -5,8 +5,6 @@ export class StateManager {
         this.stateHook = stateHook;
         this.state = onChange(
             {
-                list: [],
-                loading: false,
                 ...initialState,
             },
             (path) => {

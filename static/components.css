@@ -50,3 +50,7 @@
 .active-btn {
     background: var(--gray) !important;
 }
+
+.disabled {
+    display: none;
+}

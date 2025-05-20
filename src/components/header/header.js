@@ -3,10 +3,9 @@ import { Search } from '../search/search';
 import './header.css'
 
 export class Header extends DivComponent {
-    constructor(appState, state) {
+    constructor(appState) {
         super()
         this.appState = appState
-        this.state = state
     }
 
     render() {

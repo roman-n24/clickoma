@@ -3,34 +3,40 @@ import './search.css'
 
 export class Search extends DivComponent {
     constructor(appState) {
-        super()
-        this.appState = appState
+        super();
+        this.appState = appState;
     }
 
     searchInput = () => {
-        const searchValue = document.querySelector('.search__body').value
-        this.appState.searchQuery = searchValue
+        const searchValue = document.querySelector('.search__body').value.trim();
+        this.appState.searchQuery = searchValue;
+
+        if (!searchValue) {
+            return
+        }
+
+        window.location.hash = `#search/query=${searchValue}`;
     }
 
     render() {
-        this.element.classList.add('search')
+        this.element.classList.add('search');
         this.element.innerHTML = `
-            <input type="text" placeholder="Search for anything..." class="search__body">
+            <input type="text" placeholder="Search for anything..." class="search__body" value="${this.appState.searchQuery || ''}">
             <button class="btn search__btn">
-                <img src="./static/icons/magnifying.svg" alt="Поиск" class="search__img">
+                <img src="./static/icons/magnifying.svg" alt="Search" class="search__img">
             </button>
-        `
+        `;
 
-        const searchInput = this.element.querySelector('.search__body')
-        const searchButton = this.element.querySelector('.search__btn')
+        const searchInput = this.element.querySelector('.search__body');
+        const searchButton = this.element.querySelector('.search__btn');
 
-        searchButton.addEventListener('click', this.searchInput)
+        searchButton.addEventListener('click', this.searchInput);
         searchInput.addEventListener('keydown', (e) => {
-            if(e.code === 'Enter') {
-                this.searchInput()
+            if (e.code === 'Enter') {
+                this.searchInput();
             }
-        })
+        });
 
-        return this.element
+        return this.element;
     }
 }
