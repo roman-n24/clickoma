@@ -1,4 +1,5 @@
 import { DivComponent } from '../../common/div-component';
+
 import './stars-review.css'
 
 export class StarsReview extends DivComponent {

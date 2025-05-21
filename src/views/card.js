@@ -1,8 +1,9 @@
 import { AbstractView } from '../common/view';
 import { Header } from '../components/header/header';
 import { CardDetails } from '../components/card-details/card-details';
-import onChange from 'on-change';
 import { StateManager } from '../common/state-manager';
+
+import onChange from 'on-change';
 
 export class CardView extends AbstractView {
     constructor(appState) {
@@ -10,21 +11,19 @@ export class CardView extends AbstractView {
         this.appState = appState
         this.appState = onChange(this.appState, this.appStateHook)
         this.stateManager = new StateManager({
-            productId: this.appState.slashName.split('=')[1],
             activeImage: undefined,
             product: []
         }, this.stateHook)
-        this.initProduct()
     }
 
     appStateHook = (path) => {
-        if(path === 'cart') { 
+        if(['cart', 'loading'].includes(path)) {
             this.render()
         }
     }
 
     stateHook = async (path) => {
-        if(path === 'productId' || path === 'activeImage') {
+        if(path === 'activeImage') {
             this.render()
         }
     }
@@ -36,7 +35,7 @@ export class CardView extends AbstractView {
 
     initProduct = async () => {
         try {
-            this.stateManager.state.loading = true
+            this.appState.loading = true
             this.stateManager.state.product = await this.loadProduct()
 
             if(!this.stateManager.activeImage) {
@@ -44,18 +43,25 @@ export class CardView extends AbstractView {
                 this.stateManager.state.activeImage = this.stateManager.state.product.images[0]
             }
 
-            this.stateManager.state.loading = false;
             this.render();
         } catch (error) {
             console.error('Ошибка при инициализации продукта:', error);
-            this.stateManager.state.loading = false;
+        } finally {
+            this.appState.loading = false;
         }
     }
 
     loadProduct = async () => {
         try {
-            const res = await fetch(`https://dummyjson.com/products/${this.stateManager.state.productId}`)
-            return res.json()
+            const id = this.appState.slashName.split('=')[1]
+            const res = await fetch(`https://dummyjson.com/products/${id}`)
+            
+            if (!res.ok) {
+                throw new Error(`HTTP error: ${res.status}`)
+            }
+
+            return res.json();
+
         } catch (err) {
             console.error(`Ошибка загрузки продуктов ${err}`)
         }
@@ -63,16 +69,26 @@ export class CardView extends AbstractView {
 
     render() {
         this.app.innerHTML = ''
+
         const main = document.createElement('div')
         main.classList.add('main')
         main.append(new CardDetails(this.appState, this.stateManager).render())
-        
+
         this.app.append(main)
         this.app.prepend(this.renderHeader())
+        
+        if(this.stateManager.state.product.length === 0) {
+            this.initProduct()
+            return
+        }
+
+        if(this.stateManager.state.product) {
+            this.setTitle(`To order ${this.stateManager.state.product.title}`)
+        }
     }
 
     renderHeader() {
-        const header = new Header(this.appState, this.stateManager).render()
+        const header = new Header(this.appState).render()
         return header
     }
 }

@@ -1,9 +1,10 @@
-import onChange from 'on-change';
 import { AbstractView } from '../common/view';
 import { Header } from '../components/header/header';
 import { CardList } from '../components/card-list/card-list';
 import { Navigation } from '../components/navigation/navigation';
 import { Switcher } from '../components/switcher/switcher';
+
+import onChange from 'on-change';
 
 export class SearchListView extends AbstractView {
     constructor(appState) {
@@ -25,8 +26,8 @@ export class SearchListView extends AbstractView {
             return;
         }
 
-        this.appState.loading = true;
         try {
+            this.appState.loading = true;
             const data = await this.appState.loadList(
                 this.appState.searchQuery,
                 this.appState.skip,
@@ -45,18 +46,22 @@ export class SearchListView extends AbstractView {
     }
 
     appStateHook = async (path) => {
-        if (path === 'searchQuery' || path === 'limit' || path === 'skip') {
+        if (['searchQuery', 'limit', 'skip'].includes(path)) {
             await this.initLoad();
         }
-        if(path === 'cart' || path === 'loading') {
+        
+        if(['cart', 'loading'].includes(path)) {
             this.render()
         }
     }
 
     render() {
-        console.log(this.appState.limit)
-
         this.app.innerHTML = '';
+
+        if(this.appState.searchQuery) {
+            this.setTitle(`Search by ${this.appState.searchQuery}`)
+        }
+
         const main = document.createElement('div');
         main.classList.add('main');
 
@@ -69,7 +74,7 @@ export class SearchListView extends AbstractView {
     }
 
     renderHeader() {
-        const header = new Header(this.appState, this.stateManager);
+        const header = new Header(this.appState);
         return header.render();
     }
 }

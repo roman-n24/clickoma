@@ -1,11 +1,11 @@
 import { DivComponent } from '../../common/div-component';
+
 import './shopping-card.css'
 
 export class ShoppingCard extends DivComponent {
-    constructor(appState, parentState) {
+    constructor(appState) {
         super()
         this.appState = appState
-        this.parentState = parentState
     }
 
     get #totalAmount() {
@@ -23,18 +23,16 @@ export class ShoppingCard extends DivComponent {
                 * (1 - product.discountPercentage / 100)).toFixed(2)
     }
 
-
-
     renderProduct = () => {
         return this.appState.cart.map(product => {
             return `
                 <tr class="table-row">
                     <td class="table-data product_wrapper">
                         <button class="close" data-id="${product.id}">
-                            <img src="./static/icons/xcircle.svg" alt="">
+                            <img src="./static/icons/xcircle.svg" alt="Close">
                         </button>
                         <span>
-                            <img class="table-data__img" src="${product.images[0]}" alt="">
+                            <img class="table-data__img" src="${product.images[0]}" alt="${product.id}">
                         </span>
                         <span class="table-data__title">${product.title}</span>
                     </td>
@@ -103,7 +101,7 @@ export class ShoppingCard extends DivComponent {
 
             const dataIdBtn = closeBtn.dataset.id
             this.appState.cart = this.appState.cart.filter(product => {
-                return product.id != dataIdBtn
+                return product.id !== Number(dataIdBtn)
             })
         })
 

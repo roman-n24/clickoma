@@ -1,5 +1,6 @@
 import { DivComponent } from '../../common/div-component';
 import { Card } from '../card/card';
+
 import './card-list.css';
 
 export class CardList extends DivComponent {
@@ -9,6 +10,8 @@ export class CardList extends DivComponent {
     }
 
     render() {
+        this.element.classList.add('card-list');
+
         if (this.appState.loading) {
             this.element.innerHTML = `
                 <div class="card-list__loading">Loading...</div>
@@ -16,7 +19,6 @@ export class CardList extends DivComponent {
             return this.element;
         }
 
-        this.element.classList.add('card-list');
 
         if (this.appState.searchQuery) {
             this.element.innerHTML = `
@@ -25,13 +27,15 @@ export class CardList extends DivComponent {
         }
 
         const cardGrid = document.createElement('div');
+
         cardGrid.classList.add('card-list__grid');
 
-        for (const product of this.appState.list || []) {
+        for (const product of this.appState.list) {
             cardGrid.append(new Card(this.appState, product).render());
         }
 
         this.element.append(cardGrid);
+        
         return this.element;
     }
 }

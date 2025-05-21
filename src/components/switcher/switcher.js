@@ -1,4 +1,5 @@
 import { DivComponent } from '../../common/div-component';
+
 import './switcher.css';
 
 export class Switcher extends DivComponent {

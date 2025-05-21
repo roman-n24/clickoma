@@ -4,7 +4,7 @@ export class AbstractView {
     }
 
     setTitle(title) {
-        document.title = title
+        document.title = `GYrP - ${title}`
     }
 
     render() {

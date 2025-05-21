@@ -1,4 +1,5 @@
 import { DivComponent } from '../../common/div-component';
+
 import './navigation.css'
 
 export class Navigation extends DivComponent {

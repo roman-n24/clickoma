@@ -62,14 +62,17 @@ class App {
         }
 
         const url = location.hash.split('/');
+        
         this.appState.slashName = url[1] || '';
         this.appState.searchQuery = '';
         this.appState.skip = 0;
+
         if (url[0] === '#search' && this.appState.slashName.startsWith('query=')) {
             this.appState.searchQuery = this.appState.slashName.split('=')[1];
         }
 
         const view = this.routes.find(route => route.path === url[0])?.view;
+
         if (!view) {
             console.error('View undefined!');
             return;

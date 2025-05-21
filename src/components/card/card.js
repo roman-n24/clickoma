@@ -1,5 +1,6 @@
 import { DivComponent } from '../../common/div-component';
 import { StarsReview } from '../stars-review/stars-review';
+
 import './card.css'
 
 export class Card extends DivComponent {
@@ -17,8 +18,6 @@ export class Card extends DivComponent {
 
     #addFromCart = () => {
         this.appState.cart.push(this.product)
-        console.log('add')
-        console.log(this.appState.cart)
     }
 
     #deleteFromCart = () => {
@@ -31,7 +30,7 @@ export class Card extends DivComponent {
         this.element.classList.add('card')
         this.element.innerHTML = `
             <a href="#product/id=${this.product.id}" class="card__img">
-                <img src="${this.product.images[0]}" alt="">
+                <img src="${this.product.images[0]}" alt="${this.product.title} - ${this.product.id}">
             </a>
             <div class="card__body">
                 <div class="card__rating_wrap">

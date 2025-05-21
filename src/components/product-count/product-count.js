@@ -1,4 +1,5 @@
 import { DivComponent } from '../../common/div-component';
+
 import './product-count.css'
 
 export class ProductCount extends DivComponent {

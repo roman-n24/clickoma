@@ -1,5 +1,6 @@
 import { DivComponent } from '../../common/div-component';
 import { Search } from '../search/search';
+
 import './header.css'
 
 export class Header extends DivComponent {
@@ -65,7 +66,6 @@ export class Header extends DivComponent {
             } else {
                 this.element.querySelector('.header__info').classList.remove('hidden')
                 this.element.querySelector('.hr_horizontal').classList.remove('hidden')
-
             }
         })
 

@@ -1,9 +1,10 @@
-import onChange from 'on-change';
 import { AbstractView } from '../common/view';
 import { Header } from '../components/header/header';
 import { CardList } from '../components/card-list/card-list';
 import { Navigation } from '../components/navigation/navigation';
 import { Switcher } from '../components/switcher/switcher';
+
+import onChange from 'on-change';
 
 export class MainView extends AbstractView {
     constructor(appState) {
@@ -34,17 +35,20 @@ export class MainView extends AbstractView {
     }
 
     appStateHook = async (path) => {
-        if (path === 'skip' || path === 'limit') {
+        if (['skip', 'limit'].includes(path)) {
             await this.initLoad();
         }
-        if (path === 'cart' || path === 'loading' || path === 'list') {
+        if (['cart', 'loading', 'list'].includes(path)) {
             this.render();
         }
     }
 
     render() {
         this.app.innerHTML = '';
+        this.setTitle('Main Menu')
+
         const main = document.createElement('div');
+
         main.classList.add('main');
         main.append(new CardList(this.appState).render());
         main.prepend(new Navigation(this.appState).render());
