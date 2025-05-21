@@ -35,14 +35,6 @@ export class Header extends DivComponent {
                                 </li>
                             </ul>
                         </div>
-                        <div class="hr-vertical"></div>
-                        <div class="sel-currency">
-                            <select name="currency" id="currency-id">
-                                <option value="usd">USD</option>
-                                <option value="rub">RUB</option>
-                                <option value="cny">CNY</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <hr class="hr_horizontal" />
