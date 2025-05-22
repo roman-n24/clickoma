@@ -3,6 +3,8 @@ import { MainView } from './views/main';
 import { CardView } from './views/card';
 import { CategoryProductsView } from './views/category-products';
 import { SearchListView } from './views/search-list';
+import { ProfileView } from './views/profile';
+import { AuthView } from './views/auth';
 
 class App {
     routes = [
@@ -12,6 +14,8 @@ class App {
         { path: '#cart', view: CartView },
         { path: '#product', view: CardView },
         { path: '#category', view: CategoryProductsView },
+        { path: '#profile', view: ProfileView },
+        { path: '#auth', view: AuthView },
     ];
 
     appState = {

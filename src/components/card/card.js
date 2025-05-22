@@ -22,8 +22,6 @@ export class Card extends DivComponent {
 
     #deleteFromCart = () => {
         this.appState.cart = this.appState.cart.filter(product => product.id !== this.product.id)
-        console.log('delete')
-        console.log(this.appState.cart)
     }
 
     render() {

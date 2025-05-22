@@ -1,0 +1,101 @@
+.account {
+    padding-top: 40px;
+    margin-bottom: 24px;
+}
+
+.account__title {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 120%;
+    color: var(--dark-gray);
+    margin: 0 0 32px 0;
+}
+
+.account__info {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.user__name {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 120%;
+    color: var(--dark-gray);
+}
+
+.user__email {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 120%;
+    color: var(--gray);
+}
+
+.account__change {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    text-decoration: none;
+    line-height: 150%;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--blue);
+}
+
+.orders__table {
+    padding: 0 24px;
+    border: 1px solid var(--border-gray);
+}
+
+.orders__title {
+    padding: 16px 0;
+}
+
+.orders__thead, .tb-order {
+    display: grid;
+    grid-template-columns: [start] repeat(4, 1fr) [end];
+}
+
+.orders__thead {
+    margin: 0 -24px;
+    padding: 10px 24px;
+    background: var(--border-gray);
+}
+
+.tb-order {
+    padding: 12px 0;
+}
+
+.tb-order:nth-child(1) {
+    padding-top: 24px;
+}
+
+.tb-order:nth-last-child(1) {
+    padding-bottom: 24px;
+}
+
+.orders__tb {
+}
+
+[order-status="in-progress"] {
+    color: var(--orange);
+}
+
+[order-status="completed"] {
+    color: var(--green);
+}
+
+[order-status="canceled"] {
+    color: var(--red);
+}

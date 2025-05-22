@@ -39,7 +39,6 @@ export class CardView extends AbstractView {
             this.stateManager.state.product = await this.loadProduct()
 
             if(!this.stateManager.activeImage) {
-                console.log('active img')
                 this.stateManager.state.activeImage = this.stateManager.state.product.images[0]
             }
 

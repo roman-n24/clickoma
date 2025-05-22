@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 24px;
-    padding-top: 72px;
+    padding-top: 40px;
 }
 
 .table-data__init-price {
