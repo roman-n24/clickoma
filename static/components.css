@@ -8,6 +8,16 @@
     line-height: 143%;
 }
 
+.btn_active {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 343%;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    background: var(--orange);
+    color: var(--white);
+}
+
 .hr_horizontal {
     opacity: 0.3;
     margin: 0;
@@ -53,4 +63,26 @@
 
 .disabled {
     display: none !important;
+}
+
+.input-field {
+    position: relative;
+}
+
+.input-field input {
+    width: 100%;
+    border: 1px solid var(--border-gray);
+    border-radius: 2px;
+    padding: 14px 20px;
+    font-size: 14px;
+}
+
+.input-label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--dark-gray);
+    position: absolute;
+    top: -24px;
+    left: 0;
 }

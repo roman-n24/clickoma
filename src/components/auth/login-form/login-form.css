@@ -1,0 +1,25 @@
+.login-form {
+    padding: 24px 32px;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+}
+
+#signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+}
+
+.login-form__title {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    color: var(--dark-gray);
+    margin: 0;
+    margin-bottom: 52px;
+}
+
+.login-form__btn {
+    border-radius: 2px;
+    padding: 0px 24px;
+}

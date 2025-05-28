@@ -75,6 +75,8 @@
 
 .tb-order {
     padding: 12px 0;
+    font-size: 14px;
+    line-height: 143%;
 }
 
 .tb-order:nth-child(1) {
@@ -85,7 +87,13 @@
     padding-bottom: 24px;
 }
 
-.orders__tb {
+.tb-order__id {
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+[order-status] {
+    font-weight: 600;
 }
 
 [order-status="in-progress"] {
@@ -98,4 +106,13 @@
 
 [order-status="canceled"] {
     color: var(--red);
+}
+
+.tb-order__date {
+    color: var(--gray);
+}
+
+.tb-order__total {
+    font-weight: 400;
+    color: var(--darkened-gray);
 }

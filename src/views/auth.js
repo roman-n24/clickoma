@@ -1,29 +1,24 @@
 import { AbstractView } from '../common/view';
 import { Header } from '../components/header/header';
-import { StateManager } from '../common/state-manager';
+import { AuthModal } from '../components/auth/auth-modal/auth-modal';
+import { 
+    db, 
+    auth,
+    doc,
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword
+} from '../common/api/firebase'
 
 import onChange from 'on-change';
-import { onAuthStateChanged } from "firebase/auth";
 
 export class AuthView extends AbstractView {
     constructor(appState) {
         super()
         this.appState = appState
         this.appState = onChange(this.appState, this.appStateHook)
-        this.stateManager = new StateManager(
-            {
-                user: null,
-                activeTab: 'login',
-            }, this.stateManagerHook)
     }
 
-    appStateHook = (path) => {
-        
-    }
-
-    stateManagerHook = () => {
-
-    }
+    appStateHook = (path) => {}
 
     destroy() {
         onChange.unsubscribe(this.appState);
@@ -36,6 +31,7 @@ export class AuthView extends AbstractView {
         const main = document.createElement('div')
 
         main.classList.add('main')
+        main.append(new AuthModal(this.appState).render())
         
         this.app.append(main)
         this.app.prepend(this.renderHeader())
