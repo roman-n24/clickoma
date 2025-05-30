@@ -49,7 +49,7 @@ export class CardDetails extends DivComponent {
 
         if(this.appState.loading || product.length === 0) {
             this.element.innerHTML = `
-                <div class="card-list__loading">Loading...</div>
+                <div class="loading">Loading...</div>
             `
 
             return this.element

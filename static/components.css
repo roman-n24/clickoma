@@ -86,3 +86,12 @@
     top: -24px;
     left: 0;
 }
+
+.loading {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 143%;
+    display: flex;
+    justify-content: center;
+    color: var(--dark-gray);
+}

@@ -3,9 +3,9 @@ import { DivComponent } from '../../../common/div-component'
 import './login-form.css'
 
 export class LoginForm extends DivComponent {
-    constructor(appState) {
+    constructor(firebaseMethods) {
         super()
-        this.appState = appState
+        this.firebaseMethods = firebaseMethods
     }
 
     render() {
@@ -24,6 +24,22 @@ export class LoginForm extends DivComponent {
                 <button class="btn btn_active login-form__btn">Sign in</button>
             </form>
         `
+
+        const signInForm = this.element.querySelector('#signin-form')
+
+        signInForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const email = e.target['signin-email'].value
+            const password = e.target['signin-password'].value
+
+            try {
+                await this.firebaseMethods.signInWithEmailAndPassword(this.firebaseMethods.auth, email, password)
+            } catch (err) {
+                console.error(`Error during user registration ${err}`)
+            }
+
+        })
 
         return this.element
     }

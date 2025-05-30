@@ -1,4 +1,5 @@
 import { DivComponent } from '../../common/div-component';
+import { sendEmail } from '../../common/api/emailjs';
 
 import './shopping-card.css'
 
@@ -8,14 +9,10 @@ export class ShoppingCard extends DivComponent {
         this.appState = appState
     }
 
-    get #totalAmount() {
+    get totalAmount() {
         return this.appState.cart.reduce((acc, product) => {
             return acc += Number(this.#discountPrice(product))
         }, 0).toFixed(2)
-    }
-
-    get #resultTotal() {
-        return this.#totalAmount
     }
     
     #discountPrice(product) {
@@ -47,7 +44,7 @@ export class ShoppingCard extends DivComponent {
             `
         }).join('')
     }
-    
+
     render() {
         this.element.classList.add('shopping-card')
         this.element.innerHTML = `
@@ -77,7 +74,7 @@ export class ShoppingCard extends DivComponent {
                                 <li>Discount</li>
                             </ul>
                             <ul class="list-amounts">
-                                <li>$${this.#totalAmount}</li>
+                                <li>$${this.totalAmount}</li>
                                 <li>Free</li>
                                 <li>$0</li>
                             </ul>
@@ -85,14 +82,21 @@ export class ShoppingCard extends DivComponent {
                         <hr class="hr_horizontal">
                         <div class="card-totals__result">
                             <div class="result-title">Total</div>
-                            <div class="result-total">$${this.#resultTotal} USD</div>
+                            <div class="result-total">$${this.totalAmount} USD</div>
                         </div>
+                        <button class="btn btn_active card-totals__btn">
+                            Place an order
+                            <img class="btn-arrow-img" src="./static/icons/arrow-right-white.svg" alt="Arrow right">
+                        </button>
                     </div>
                 </article>
             </div>
         `
 
-        this.element.querySelector('.table-body').addEventListener('click', (e) => {
+        const tbody = this.element.querySelector('.table-body')
+        const cardTotalsBtn = this.element.querySelector('.card-totals__btn')
+
+        tbody.addEventListener('click', (e) => {
             const closeBtn = e.target.closest('.close')
 
             if(!closeBtn) {
@@ -103,6 +107,42 @@ export class ShoppingCard extends DivComponent {
             this.appState.cart = this.appState.cart.filter(product => {
                 return product.id !== Number(dataIdBtn)
             })
+        })
+
+        cardTotalsBtn.addEventListener('click', () => {
+            const ordersHtml = this.appState.cart.map(product => {
+                return `
+                    <tr style="vertical-align: top;">
+                        <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content; filter: invert(1) hue-rotate(180deg); background: white;"><a href="#"><img style="height: 64px;" src="${product.images[0]}" alt="item" height="64px"></a></td>
+                        <td style="padding: 24px 8px 0 8px; width: 100%;">
+                            <div>${product.title}</div>
+                            <div style="font-size: 14px; color: #888; padding-top: 4px;">QTY: 1</div>
+                        </td>
+                        <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$${this.#discountPrice(product)}</strong></td>
+                    </tr>
+                `
+            })
+
+            const ordersTable = `
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tbody>${ordersHtml.join('')}</tbody>
+                </table>
+            `
+
+            const templateStaticParams = {
+                order_id: 1,
+                orders: 'Orders',
+                email: 'irina.nugmanova111187@gmail.com',
+                units: this.appState.cart.length,
+                cost: {
+                    shipping: 0,
+                    tax: 0,
+                    total: this.totalAmount
+                },
+                orders_table: ordersTable
+            }
+
+            sendEmail(templateStaticParams)
         })
 
         return this.element

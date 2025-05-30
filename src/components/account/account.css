@@ -13,13 +13,6 @@
 
 .account__info {
     display: flex;
-    gap: 24px;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.user {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -27,14 +20,14 @@
     margin-bottom: 12px;
 }
 
-.user__name {
+.user-name {
     font-size: 24px;
     font-weight: 700;
     line-height: 120%;
     color: var(--dark-gray);
 }
 
-.user__email {
+.user-email {
     font-size: 18px;
     font-weight: 400;
     line-height: 120%;
@@ -115,4 +108,8 @@
 .tb-order__total {
     font-weight: 400;
     color: var(--darkened-gray);
+}
+
+.account__btn {
+    
 }

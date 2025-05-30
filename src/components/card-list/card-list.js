@@ -14,7 +14,7 @@ export class CardList extends DivComponent {
 
         if (this.appState.loading) {
             this.element.innerHTML = `
-                <div class="card-list__loading">Loading...</div>
+                <div class="loading">Loading...</div>
             `;
             return this.element;
         }

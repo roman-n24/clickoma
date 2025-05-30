@@ -9,6 +9,19 @@ export class Header extends DivComponent {
         this.appState = appState
     }
 
+    updateHeaderVisibility() {
+        const headerInfo = this.element.querySelector('.header__info')
+        const hr = this.element.querySelector('.hr_horizontal')
+
+        if (window.scrollY > 0) {
+            headerInfo.classList.add('hidden')
+            hr.classList.add('hidden')
+        } else {
+            headerInfo.classList.remove('hidden')
+            hr.classList.remove('hidden')
+        }
+    }
+
     render() {
         this.element.classList.add('header')
         this.element.innerHTML = `
@@ -58,17 +71,13 @@ export class Header extends DivComponent {
                 </div>
             </div>
         `
-
+        
         window.addEventListener('scroll', () => {
-            if(window.scrollY > 0) {
-                this.element.querySelector('.header__info').classList.add('hidden')
-                this.element.querySelector('.hr_horizontal').classList.add('hidden')
-            } else {
-                this.element.querySelector('.header__info').classList.remove('hidden')
-                this.element.querySelector('.hr_horizontal').classList.remove('hidden')
-            }
+            this.updateHeaderVisibility()
         })
-
+        
+        this.updateHeaderVisibility()
+        
         const search = this.element.querySelector('.search_wrap')
         search.append(this.renderSearch())
 

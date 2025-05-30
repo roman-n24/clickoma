@@ -24,12 +24,14 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "eslint": "^9.25.0",
     "globals": "^16.0.0",
     "live-server": "^1.2.0",
     "rollup-plugin-import-css": "^3.5.8"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "firebase": "^11.8.1",
     "on-change": "^5.0.1",
     "rollup": "^4.40.1"

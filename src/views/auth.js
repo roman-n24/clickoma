@@ -6,7 +6,10 @@ import {
     auth,
     doc,
     createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    setDoc,
+    collection
 } from '../common/api/firebase'
 
 import onChange from 'on-change';
@@ -16,25 +19,45 @@ export class AuthView extends AbstractView {
         super()
         this.appState = appState
         this.appState = onChange(this.appState, this.appStateHook)
+        this.firebaseMethods = { 
+            db, 
+            auth, 
+            doc, 
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            setDoc,
+            collection
+        }
     }
 
-    appStateHook = (path) => {}
+    appStateHook = (path) => {
+        if(path === 'cart') {
+            this.render()
+        }
+    }
 
     destroy() {
         onChange.unsubscribe(this.appState);
     }
 
     render() {
-        this.app.innerHTML = ''
-        this.setTitle('Auth')
-        
-        const main = document.createElement('div')
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                location.hash = '#'
+                return
+            }
 
-        main.classList.add('main')
-        main.append(new AuthModal(this.appState).render())
-        
-        this.app.append(main)
-        this.app.prepend(this.renderHeader())
+            this.app.innerHTML = ''
+            this.setTitle('Auth')
+            
+            const main = document.createElement('div')
+
+            main.classList.add('main')
+            main.append(new AuthModal(this.firebaseMethods).render())
+            
+            this.app.append(main)
+            this.app.prepend(this.renderHeader())
+        })
     }
 
     renderHeader() {

@@ -45,7 +45,7 @@ export class MainView extends AbstractView {
 
     render() {
         this.app.innerHTML = '';
-        this.setTitle('Main Menu')
+        this.setTitle('Main')
 
         const main = document.createElement('div');
 

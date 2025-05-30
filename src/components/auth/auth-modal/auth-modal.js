@@ -5,9 +5,9 @@ import { LoginForm } from '../login-form/login-form';
 import './auth-modal.css'
 
 export class AuthModal extends DivComponent {
-    constructor(appState) {
+    constructor(firebaseMethods) {
         super();
-        this.appState = appState;
+        this.firebaseMethods = firebaseMethods
     }
 
     render() {
@@ -22,25 +22,20 @@ export class AuthModal extends DivComponent {
 
         const authModalWrap = this.element.querySelector('.auth-modal__wrapper')
         const modalSelect = this.element.querySelector('.auth-modal__select')
-        const loginForm = new LoginForm(this.appState).render()
+        const loginFormRender = new LoginForm(this.firebaseMethods).render()
+        const regFormRender = new RegisterForm(this.firebaseMethods).render()
 
-        modalSelect.append(loginForm)
+        authModalWrap.append(loginFormRender)
 
-        // Полностью переделать логику
         modalSelect.addEventListener('click', (e) => {
-            if(e.target.dataset.active !== 'open') {
-                if(e.target.dataset.tab === 'login') {
-                    authModalWrap.innerHTML = ''
-                    e.target.dataset.active = 'close'
-                    authModalWrap.append(loginForm)
-                    console.log('render')
-                } else {
-                    authModalWrap.innerHTML = ''
-                    e.target.dataset.active = 'active'
-                    authModalWrap.append(new RegisterForm(this.appState).render())
-                    console.log('render')
-                }
+            const dataTab = e.target.dataset.tab
+
+            if(!dataTab) {
+                return
             }
+
+            authModalWrap.innerHTML = ''
+            authModalWrap.append(dataTab === 'login' ? loginFormRender : regFormRender)
         })
 
         return this.element;

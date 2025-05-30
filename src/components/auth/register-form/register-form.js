@@ -3,12 +3,10 @@ import { DivComponent } from '../../../common/div-component'
 import './register-form.css'
 
 export class RegisterForm extends DivComponent {
-    constructor(appState) {
+    constructor(firebaseMethods) {
         super()
-        this.appState = appState
+        this.firebaseMethods = firebaseMethods
     }
-
-    
 
     render() {
         this.element.classList.add('register-form')
@@ -34,6 +32,35 @@ export class RegisterForm extends DivComponent {
                 <button class="btn btn_active register-form__btn">Sign up</button>
             </form>
         `
+
+        const signUpForm = this.element.querySelector('#signup-form')
+
+        signUpForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const name = e.target['signup-name'].value
+            const email = e.target['signup-email'].value
+            const password = e.target['signup-password'].value
+            const age = e.target['signup-age'].value
+
+            try {
+                const cred = await this.firebaseMethods.createUserWithEmailAndPassword(this.firebaseMethods.auth, email, password)
+
+                this.firebaseMethods.setDoc(
+                    this.firebaseMethods.doc(
+                        this.firebaseMethods.collection(
+                            this.firebaseMethods.db, 'users'
+                        ), cred.user.uid
+                    ), {
+                        name,
+                        age,
+                        uid: cred.user.uid
+                    })
+            } catch (err) {
+                console.error(`Error during user registration ${err}`)
+            }
+
+        })
 
         return this.element
     }
