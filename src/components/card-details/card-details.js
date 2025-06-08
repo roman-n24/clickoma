@@ -4,38 +4,38 @@ import { StarsReview } from '../stars-review/stars-review';
 import './card-details.css'
 
 export class CardDetails extends DivComponent {
-    constructor(appState, parentStateManager) {
+    constructor(appState, parentState) {
         super()
         this.appState = appState
-        this.parentStateManager = parentStateManager
+        this.parentState = parentState
     }
 
     #addFromCart = () => {
-        this.appState.cart.push(this.parentStateManager.state.product)
+        this.appState.cart.push(this.parentState.state.product)
     }
 
     #deleteFromCart = () => {
-        this.appState.cart = this.appState.cart.filter(product => product.id !== this.parentStateManager.state.product.id)
+        this.appState.cart = this.appState.cart.filter(product => product.id !== this.parentState.state.product.id)
     }
 
     get isInCart() {
         return this.appState.cart.find(product => 
-            product.id === this.parentStateManager.state.product.id
+            product.id === this.parentState.state.product.id
         )
     }
 
     get imageIndex() {
-        const fileName = this.parentStateManager.state?.activeImage?.split('/').at(-1)?.split('.')[0];
+        const fileName = this.parentState.state?.activeImage?.split('/').at(-1)?.split('.')[0];
         return fileName ? +fileName - 1 : 0;
     }
 
     renderCardImages() {
-        return this.parentStateManager.state.product.images.map((img, i) => {
+        return this.parentState.state.product.images.map((img, i) => {
             return `<li>
                 <button class="card-represent-list__btn btn ${i === this.imageIndex ? 'mini-img_active' : ''}">
                     <img
                         src="${img}"
-                        alt="${this.parentStateManager.state.product.title} - ${i + 1}"
+                        alt="${this.parentState.state.product.title} - ${i + 1}"
                     >
                 </button>
             </li>`
@@ -45,7 +45,7 @@ export class CardDetails extends DivComponent {
     render() {
         this.element.classList.add('card-details')
 
-        const { product, activeImage } = this.parentStateManager.state;
+        const { product, activeImage } = this.parentState.state;
 
         if(this.appState.loading || product.length === 0) {
             this.element.innerHTML = `
@@ -134,7 +134,7 @@ export class CardDetails extends DivComponent {
                 })
 
                 parentBtn.classList.add('mini-img_active')
-                this.parentStateManager.state.activeImage = e.target.src
+                this.parentState.state.activeImage = e.target.src
             }
         })
 

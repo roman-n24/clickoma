@@ -34,6 +34,12 @@
     color: var(--gray);
 }
 
+.account__interaction-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .account__change {
     display: flex;
     align-items: center;
@@ -44,6 +50,18 @@
     font-size: 18px;
     font-weight: 400;
     color: var(--blue);
+}
+
+.account__btn {
+    line-height: 150%;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--dark-gray);
+    border-bottom: 1px dashed transparent;
+}
+
+.account__btn:hover {
+    border-bottom-color: var(--red);
 }
 
 .orders__table {
@@ -108,8 +126,4 @@
 .tb-order__total {
     font-weight: 400;
     color: var(--darkened-gray);
-}
-
-.account__btn {
-    
 }

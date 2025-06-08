@@ -19,6 +19,7 @@ export class ProfileView extends AbstractView {
         this.appState = onChange(this.appState, this.appStateHook)
         this.state = {
             userData: null,
+            orders: null,
         }
         this.state = onChange(this.state, this.stateHook)
         this.users()
@@ -41,11 +42,9 @@ export class ProfileView extends AbstractView {
     }
 
     setUserData(data) {
-        if(data !== this.state.userData) {
-            const doc = data.find(doc => doc.id === auth.currentUser?.uid)
-            this.state.userData = doc?.data()
-        }
-
+        const doc = data.find(doc => doc.id === auth.currentUser?.uid)
+        this.state.userData = doc?.data()
+        
         return
     }
 
@@ -73,7 +72,6 @@ export class ProfileView extends AbstractView {
                 `
                 return this.app
             }
-
 
             const main = document.createElement('div')
             main.classList.add('main')

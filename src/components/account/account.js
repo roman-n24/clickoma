@@ -25,13 +25,15 @@ export class Account extends DivComponent {
                     <div class="user-name">${this.parentState.userData?.name}</div>
                     <div class="user-email">${this.user.email}</div>
             </div>
-            <a href="#edit" class="account__change">
-                <img src="./static/icons/pencil-simple-line.svg" alt="Pencil">
-                <span class="user-change-title">Change profile</span>
-            </a>
-            <button class="btn account__btn">
-                Exit account
-            </button>
+            <div class="account__interaction-wrapper">
+                <a href="#edit" class="account__change">
+                    <img src="./static/icons/pencil-simple-line.svg" alt="Pencil">
+                    <span class="user-change-title">Change profile</span>
+                </a>
+                <button class="btn account__btn">
+                    Exit account
+                </button>
+            </div>
         `
 
         const accBtn = this.element.querySelector('.account__btn')

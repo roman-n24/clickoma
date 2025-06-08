@@ -5,6 +5,10 @@
     background-color: var(--blue);
 }
 
+.header__wrapper {
+    padding: 0 10px;
+}
+
 .header__info {
     display: flex;
     align-items: center;

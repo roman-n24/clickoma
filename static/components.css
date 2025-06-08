@@ -18,6 +18,10 @@
     color: var(--white);
 }
 
+.btn_gray {
+    background-color: var(--gray-price) !important;
+}
+
 .hr_horizontal {
     opacity: 0.3;
     margin: 0;

@@ -1,12 +1,14 @@
 import { DivComponent } from '../../common/div-component';
-import { sendEmail } from '../../common/api/emailjs';
+import { auth, db, addDoc, collection } from '../../common/api/firebase';
+import { EmailJS } from '../../common/api/emailjs'
 
 import './shopping-card.css'
 
 export class ShoppingCard extends DivComponent {
-    constructor(appState) {
+    constructor(appState, parentStateManager) {
         super()
         this.appState = appState
+        this.parentStateManager = parentStateManager
     }
 
     get totalAmount() {
@@ -18,6 +20,75 @@ export class ShoppingCard extends DivComponent {
     #discountPrice(product) {
         return (product.price 
                 * (1 - product.discountPercentage / 100)).toFixed(2)
+    }
+
+    sendEmail = () => {
+        const ordersHtml = this.appState.cart.map(product => {
+            return `
+                <tr style="vertical-align: top;">
+                    <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content; filter: invert(1) hue-rotate(180deg); background: white;"><a href="#"><img style="height: 64px;" src="${product.images[0]}" alt="item" height="64px"></a></td>
+                    <td style="padding: 24px 8px 0 8px; width: 100%;">
+                        <div>${product.title}</div>
+                        <div style="font-size: 14px; color: #888; padding-top: 4px;">QTY: 1</div>
+                    </td>
+                    <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$${this.#discountPrice(product)}</strong></td>
+                </tr>
+            `
+        })
+
+        const ordersTable = `
+            <table style="width: 100%; border-collapse: collapse;">
+                <tbody>${ordersHtml.join('')}</tbody>
+            </table>
+        `
+
+        const templateStaticParams = {
+            order_id: 1,
+            orders: 'Orders',
+            email: auth?.currentUser.email || false,
+            units: this.appState.cart.length,
+            cost: {
+                shipping: 0,
+                tax: 0,
+                total: this.totalAmount
+            },
+            orders_table: ordersTable
+        }
+
+        new EmailJS(this.parentStateManager).sendEmail(templateStaticParams)
+    }
+
+    setOrderData = async () => {
+        const order = {
+            userId: auth.currentUser.uid || null,
+            userEmail: auth.currentUser.email || null,
+            items: this.appState.cart.map(({ id, price }) => {
+                return {
+                    productId: id,
+                    price
+                }
+            }),
+            status: 'pending',
+            total: this.totalAmount,
+        }
+
+        try {
+            await addDoc(collection(db, 'orders'), order)
+            this.parentStateManager.state.setOrder = true
+            console.log('Success in creating a new item in the orders collection')
+        } catch (err) {
+            console.error(`Error in creating a new item in the orders collection: ${err}`)
+        }
+    }
+
+    cardTotalsBtnListener = () => {
+        if(!auth.currentUser || this.appState.cart.length === 0) {
+            console.log('Нельзя')
+            return
+        }
+
+        // this.sendEmail()
+        this.setOrderData()
     }
 
     renderProduct = () => {
@@ -84,7 +155,7 @@ export class ShoppingCard extends DivComponent {
                             <div class="result-title">Total</div>
                             <div class="result-total">$${this.totalAmount} USD</div>
                         </div>
-                        <button class="btn btn_active card-totals__btn">
+                        <button class="btn btn_active card-totals__btn btn_send">
                             Place an order
                             <img class="btn-arrow-img" src="./static/icons/arrow-right-white.svg" alt="Arrow right">
                         </button>
@@ -95,7 +166,7 @@ export class ShoppingCard extends DivComponent {
 
         const tbody = this.element.querySelector('.table-body')
         const cardTotalsBtn = this.element.querySelector('.card-totals__btn')
-
+        
         tbody.addEventListener('click', (e) => {
             const closeBtn = e.target.closest('.close')
 
@@ -109,41 +180,12 @@ export class ShoppingCard extends DivComponent {
             })
         })
 
-        cardTotalsBtn.addEventListener('click', () => {
-            const ordersHtml = this.appState.cart.map(product => {
-                return `
-                    <tr style="vertical-align: top;">
-                        <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content; filter: invert(1) hue-rotate(180deg); background: white;"><a href="#"><img style="height: 64px;" src="${product.images[0]}" alt="item" height="64px"></a></td>
-                        <td style="padding: 24px 8px 0 8px; width: 100%;">
-                            <div>${product.title}</div>
-                            <div style="font-size: 14px; color: #888; padding-top: 4px;">QTY: 1</div>
-                        </td>
-                        <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$${this.#discountPrice(product)}</strong></td>
-                    </tr>
-                `
-            })
+        if(this.parentStateManager.state.setOrder) {
+            cardTotalsBtn.classList.add('btn_gray')
+            return this.element
+        }
 
-            const ordersTable = `
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tbody>${ordersHtml.join('')}</tbody>
-                </table>
-            `
-
-            const templateStaticParams = {
-                order_id: 1,
-                orders: 'Orders',
-                email: 'irina.nugmanova111187@gmail.com',
-                units: this.appState.cart.length,
-                cost: {
-                    shipping: 0,
-                    tax: 0,
-                    total: this.totalAmount
-                },
-                orders_table: ordersTable
-            }
-
-            sendEmail(templateStaticParams)
-        })
+        cardTotalsBtn.addEventListener('click', this.cardTotalsBtnListener)
 
         return this.element
     }

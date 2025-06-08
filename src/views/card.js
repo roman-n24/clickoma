@@ -10,7 +10,7 @@ export class CardView extends AbstractView {
         super()
         this.appState = appState
         this.appState = onChange(this.appState, this.appStateHook)
-        this.stateManager = new StateManager({
+        this.state = new StateManager({
             activeImage: undefined,
             product: []
         }, this.stateHook)
@@ -30,16 +30,16 @@ export class CardView extends AbstractView {
 
     destroy() {
         onChange.unsubscribe(this.appState);
-        this.stateManager.destroy()
+        this.state.destroy()
     }
 
     initProduct = async () => {
         try {
             this.appState.loading = true
-            this.stateManager.state.product = await this.loadProduct()
+            this.state.state.product = await this.loadProduct()
 
-            if(!this.stateManager.activeImage) {
-                this.stateManager.state.activeImage = this.stateManager.state.product.images[0]
+            if(!this.state.activeImage) {
+                this.state.state.activeImage = this.state.state.product.images[0]
             }
 
             this.render();
@@ -71,18 +71,18 @@ export class CardView extends AbstractView {
 
         const main = document.createElement('div')
         main.classList.add('main')
-        main.append(new CardDetails(this.appState, this.stateManager).render())
+        main.append(new CardDetails(this.appState, this.state).render())
 
         this.app.append(main)
         this.app.prepend(this.renderHeader())
         
-        if(this.stateManager.state.product.length === 0) {
+        if(this.state.state.product.length === 0) {
             this.initProduct()
             return
         }
 
-        if(this.stateManager.state.product) {
-            this.setTitle(`To order ${this.stateManager.state.product.title}`)
+        if(this.state.state.product) {
+            this.setTitle(`To order ${this.state.state.product.title}`)
         }
     }
 
