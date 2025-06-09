@@ -30,6 +30,8 @@ export class CartView extends AbstractView {
     }
 
     render() {
+        console.log(this.stateManager.state.setOrder)
+
         this.app.innerHTML = ''
         this.setTitle('Shopping Cart')
         

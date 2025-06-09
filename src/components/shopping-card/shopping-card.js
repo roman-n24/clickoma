@@ -34,11 +34,11 @@ export class ShoppingCard extends DivComponent {
                     <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$${this.#discountPrice(product)}</strong></td>
                 </tr>
             `
-        })
+        }).join('')
 
         const ordersTable = `
             <table style="width: 100%; border-collapse: collapse;">
-                <tbody>${ordersHtml.join('')}</tbody>
+                <tbody>${ordersHtml}</tbody>
             </table>
         `
 
@@ -68,7 +68,8 @@ export class ShoppingCard extends DivComponent {
                     price
                 }
             }),
-            status: 'pending',
+            status: 'In Progress',
+            date: new Date(),
             total: this.totalAmount,
         }
 
@@ -87,8 +88,10 @@ export class ShoppingCard extends DivComponent {
             return
         }
 
-        // this.sendEmail()
+        this.sendEmail()
         this.setOrderData()
+
+        this.appState.cart = []
     }
 
     renderProduct = () => {
@@ -182,6 +185,7 @@ export class ShoppingCard extends DivComponent {
 
         if(this.parentStateManager.state.setOrder) {
             cardTotalsBtn.classList.add('btn_gray')
+            cardTotalsBtn.disable = true
             return this.element
         }
 

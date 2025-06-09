@@ -6,9 +6,10 @@ import {
     onAuthStateChanged,
     auth,
     collection,
-    db
+    db,
+    onSnapshot, 
+    getDocs
 } from '../common/api/firebase'
-import { onSnapshot } from 'firebase/firestore';
 
 import onChange from 'on-change';
 
@@ -16,29 +17,33 @@ export class ProfileView extends AbstractView {
     constructor(appState) {
         super()
         this.appState = appState
-        this.appState = onChange(this.appState, this.appStateHook)
         this.state = {
             userData: null,
             orders: null,
         }
         this.state = onChange(this.state, this.stateHook)
-        this.users()
-    }
-
-    appStateHook = (path) => {
-        if(path === 'cart') {
-            this.render()
-        }
     }
 
     stateHook = (path) => {
-        if(path === 'userData') {
+        if(['userData', 'orders'].includes(path)) {
             this.render()
         }
     }
 
     destroy() {
         onChange.unsubscribe(this.appState);
+    }
+
+    setOrdersData = async () => {
+        this.appState.loading = true
+        try {
+            const querySnap = await getDocs(collection(db, 'orders'))
+            this.state.orders = querySnap
+        } catch (err) {
+            console.error(`Error receiving user order data from firestore: ${err}`)
+        } finally {
+            this.appState.loading = false
+        }
     }
 
     setUserData(data) {
@@ -57,6 +62,14 @@ export class ProfileView extends AbstractView {
     }
 
     render() {
+        if(!this.state.userData) {
+            this.users()
+        }
+
+        if(!this.state.orders) { 
+            this.setOrdersData()
+        }
+
         onAuthStateChanged(auth, user => {
             if(!user) {
                 location.hash = '#auth'
@@ -77,7 +90,7 @@ export class ProfileView extends AbstractView {
             main.classList.add('main')
 
             main.append(new Account(this.state).render())
-            main.append(new Orders(this.appState).render())
+            main.append(new Orders(this.appState, this.state).render())
             
             this.app.append(main)
             this.app.prepend(this.renderHeader())
