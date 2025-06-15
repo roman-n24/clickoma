@@ -18,11 +18,22 @@ export class ShoppingCard extends DivComponent {
     }
     
     #discountPrice(product) {
-        return (product.price 
-                * (1 - product.discountPercentage / 100)).toFixed(2)
+        const price = product.price * (1 - product.discountPercentage / 100);
+        return Math.round(price * 100) / 100;
     }
 
-    sendEmail = () => {
+    #generateOrderId(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+        let result = ''
+
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length))
+        }
+
+        return result
+    }
+
+    sendEmail = (orderId) => {
         const ordersHtml = this.appState.cart.map(product => {
             return `
                 <tr style="vertical-align: top;">
@@ -42,8 +53,9 @@ export class ShoppingCard extends DivComponent {
             </table>
         `
 
+        // FIXME:
         const templateStaticParams = {
-            order_id: 1,
+            order_id: orderId,
             orders: 'Orders',
             email: auth?.currentUser.email || false,
             units: this.appState.cart.length,
@@ -60,6 +72,7 @@ export class ShoppingCard extends DivComponent {
 
     setOrderData = async () => {
         const order = {
+            orderId: this.#generateOrderId(5),
             userId: auth.currentUser.uid || null,
             userEmail: auth.currentUser.email || null,
             items: this.appState.cart.map(({ id, price }) => {
@@ -73,29 +86,31 @@ export class ShoppingCard extends DivComponent {
             total: this.totalAmount,
         }
 
+        this.appState.loading = true
         try {
             await addDoc(collection(db, 'orders'), order)
+            this.sendEmail(order.orderId)
             this.parentStateManager.state.setOrder = true
+            this.appState.cart = []
             console.log('Success in creating a new item in the orders collection')
         } catch (err) {
             console.error(`Error in creating a new item in the orders collection: ${err}`)
+        } finally {
+            this.appState.loading = false
         }
     }
 
     cardTotalsBtnListener = () => {
         if(!auth.currentUser || this.appState.cart.length === 0) {
-            console.log('Нельзя')
             return
         }
 
-        this.sendEmail()
         this.setOrderData()
-
-        this.appState.cart = []
     }
 
     renderProduct = () => {
         return this.appState.cart.map(product => {
+            const discountPrice = this.#discountPrice(product)
             return `
                 <tr class="table-row">
                     <td class="table-data product_wrapper">
@@ -109,10 +124,10 @@ export class ShoppingCard extends DivComponent {
                     </td>
                     <td class="table-data table-data-mid">
                         <span class="init-price table-data__init-price">$${product.price}</span>
-                        <span class="table-data__sale-price">$${this.#discountPrice(product)}</span>
+                        <span class="table-data__sale-price">${discountPrice}</span>
                     </td>
                     <td class="table-data">
-                        <span class="table-data__sale-price">$${this.#discountPrice(product)}</span>
+                        <span class="table-data__sale-price">$${discountPrice}</span>
                     </td>
                 </tr>
             `
@@ -121,6 +136,9 @@ export class ShoppingCard extends DivComponent {
 
     render() {
         this.element.classList.add('shopping-card')
+
+        const isCartEmpty = this.appState.cart.length === 0;
+
         this.element.innerHTML = `
             <div class="shopping-card__wrapper">
                 <div>
@@ -158,7 +176,9 @@ export class ShoppingCard extends DivComponent {
                             <div class="result-title">Total</div>
                             <div class="result-total">$${this.totalAmount} USD</div>
                         </div>
-                        <button class="btn btn_active card-totals__btn btn_send">
+                        <button class="btn btn_active card-totals__btn" 
+                            ${isCartEmpty ? 'disabled' : ''}
+                        >
                             Place an order
                             <img class="btn-arrow-img" src="./static/icons/arrow-right-white.svg" alt="Arrow right">
                         </button>
@@ -182,12 +202,6 @@ export class ShoppingCard extends DivComponent {
                 return product.id !== Number(dataIdBtn)
             })
         })
-
-        if(this.parentStateManager.state.setOrder) {
-            cardTotalsBtn.classList.add('btn_gray')
-            cardTotalsBtn.disable = true
-            return this.element
-        }
 
         cardTotalsBtn.addEventListener('click', this.cardTotalsBtnListener)
 

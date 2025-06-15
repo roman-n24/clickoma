@@ -10,7 +10,7 @@ export class CartView extends AbstractView {
         super()
         this.appState = appState
         this.appState = onChange(this.appState, this.appStateHook)
-        this.stateManager = new StateManager({ sendEmail: false, setOrder: false }, this.stateManagerHook)
+        this.stateManager = new StateManager({ sendEmail: false, setOrder: false, orderId: null }, this.stateManagerHook)
     }
 
     appStateHook = (path) => {

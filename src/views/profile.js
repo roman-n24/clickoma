@@ -7,43 +7,42 @@ import {
     auth,
     collection,
     db,
-    onSnapshot, 
-    getDocs
+    onSnapshot
 } from '../common/api/firebase'
 
 import onChange from 'on-change';
+import { FirestoreOrders } from '../common/api/firestore-orders';
 
 export class ProfileView extends AbstractView {
     constructor(appState) {
         super()
         this.appState = appState
+        this.appState = onChange(this.appState, this.appStateHook)
         this.state = {
             userData: null,
-            orders: null,
+            ordersData: null
         }
         this.state = onChange(this.state, this.stateHook)
+        this.firestoreOrders = new FirestoreOrders((orders) => {
+            this.state.ordersData = orders
+        })
+        this.firestoreOrders.loadOrders()
+    }
+
+    appStateHook = (path) => {
+        if(path === 'loading') {
+            this.render()
+        }
     }
 
     stateHook = (path) => {
-        if(['userData', 'orders'].includes(path)) {
+        if(['userData', 'ordersData'].includes(path)) {
             this.render()
         }
     }
 
     destroy() {
         onChange.unsubscribe(this.appState);
-    }
-
-    setOrdersData = async () => {
-        this.appState.loading = true
-        try {
-            const querySnap = await getDocs(collection(db, 'orders'))
-            this.state.orders = querySnap
-        } catch (err) {
-            console.error(`Error receiving user order data from firestore: ${err}`)
-        } finally {
-            this.appState.loading = false
-        }
     }
 
     setUserData(data) {
@@ -64,10 +63,6 @@ export class ProfileView extends AbstractView {
     render() {
         if(!this.state.userData) {
             this.users()
-        }
-
-        if(!this.state.orders) { 
-            this.setOrdersData()
         }
 
         onAuthStateChanged(auth, user => {

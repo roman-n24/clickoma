@@ -28,6 +28,7 @@ class App {
         list: [],
         loading: false,
         slashName: '',
+        orders: null,
         loadList: async (q, skip, limit) => {
             const res = await fetch(`https://dummyjson.com/products/search?q=${q || ''}&skip=${skip || 0}&limit=${limit || 0}`);
             if (!res.ok) {

@@ -14,21 +14,26 @@ export class AuthModal extends DivComponent {
         this.element.classList.add('auth-modal');
         this.element.innerHTML = `
             <div class="auth-modal__select">
-                <button class="btn login-tab" data-tab="login" data-active="open">Login</button>
-                <button class="btn register-tab" data-tab="register" data-active="close">Register</button>
+                <button class="btn auth-btn login-tab tab_active" data-tab="login">Login</button>
+                <button class="btn auth-btn register-tab" data-tab="register" >Register</button>
             </div>
             <div class="auth-modal__wrapper"></div>
         `;
 
         const authModalWrap = this.element.querySelector('.auth-modal__wrapper')
         const modalSelect = this.element.querySelector('.auth-modal__select')
+        
         const loginFormRender = new LoginForm(this.firebaseMethods).render()
         const regFormRender = new RegisterForm(this.firebaseMethods).render()
-
+        
         authModalWrap.append(loginFormRender)
-
+        
         modalSelect.addEventListener('click', (e) => {
             const dataTab = e.target.dataset.tab
+            const tabActive = this.element.querySelector('.tab_active')
+
+            tabActive.classList.remove('tab_active')
+            e.target.classList.add('tab_active')
 
             if(!dataTab) {
                 return

@@ -1,0 +1,21 @@
+.auth-modal {
+    max-width: 424px;
+}
+
+.auth-modal__select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+
+.auth-btn {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    padding: 16px 0;
+    color: var(--dark-gray);
+}
+
+.tab_active {
+    border-bottom: 1px solid var(--orange);
+}
