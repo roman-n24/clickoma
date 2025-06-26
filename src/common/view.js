@@ -4,7 +4,7 @@ export class AbstractView {
     }
 
     setTitle(title) {
-        document.title = `GYrP - ${title}`
+        document.title = `Clickoma - ${title}`
     }
 
     render() {

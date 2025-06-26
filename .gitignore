@@ -5,3 +5,5 @@ dist/
 .cache/
 .temp/
 docs/
+.idea/
+*.json

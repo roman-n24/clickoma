@@ -53,7 +53,6 @@ export class ShoppingCard extends DivComponent {
             </table>
         `
 
-        // FIXME:
         const templateStaticParams = {
             order_id: orderId,
             orders: 'Orders',
