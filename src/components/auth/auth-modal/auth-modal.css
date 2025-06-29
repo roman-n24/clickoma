@@ -1,5 +1,12 @@
 .auth-modal {
-    max-width: 424px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-modal__wrapper {
+    width: 424px;
 }
 
 .auth-modal__select {

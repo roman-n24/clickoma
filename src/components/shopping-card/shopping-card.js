@@ -100,8 +100,15 @@ export class ShoppingCard extends DivComponent {
     }
 
     cardTotalsBtnListener = () => {
-        if(!auth.currentUser || this.appState.cart.length === 0) {
+        const btn = this.element.querySelector('.card-totals__btn')
+
+        if(!auth.currentUser) {
+            btn.setAttribute('data-tooltip', 'Войдите или зарегистрируйтесь')
             return
+        }
+
+        if(btn.hasAttribute('data-tooltip')) {
+            btn.removeAttribute('data-tooltip')
         }
 
         this.setOrderData()

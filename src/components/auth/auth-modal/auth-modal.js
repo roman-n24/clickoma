@@ -13,14 +13,16 @@ export class AuthModal extends DivComponent {
     render() {
         this.element.classList.add('auth-modal');
         this.element.innerHTML = `
-            <div class="auth-modal__select">
-                <button class="btn auth-btn login-tab tab_active" data-tab="login">Login</button>
-                <button class="btn auth-btn register-tab" data-tab="register" >Register</button>
+            <div class="auth-modal__wrapper">
+                <div class="auth-modal__select">
+                    <button class="btn auth-btn login-tab tab_active" data-tab="login">Login</button>
+                    <button class="btn auth-btn register-tab" data-tab="register" >Register</button>
+                </div>
+                <div class="auth-modal__fields"></div>
             </div>
-            <div class="auth-modal__wrapper"></div>
         `;
 
-        const authModalWrap = this.element.querySelector('.auth-modal__wrapper')
+        const authModalWrap = this.element.querySelector('.auth-modal__fields')
         const modalSelect = this.element.querySelector('.auth-modal__select')
         
         const loginFormRender = new LoginForm(this.firebaseMethods).render()

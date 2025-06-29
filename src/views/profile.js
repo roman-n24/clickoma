@@ -7,7 +7,7 @@ import {
     auth,
     collection,
     db,
-    onSnapshot
+    getDocs
 } from '../common/api/firebase'
 
 import onChange from 'on-change';
@@ -27,6 +27,7 @@ export class ProfileView extends AbstractView {
             this.state.ordersData = orders
         })
         this.firestoreOrders.loadOrders()
+        this.subToAuth()
     }
 
     appStateHook = (path) => {
@@ -43,53 +44,72 @@ export class ProfileView extends AbstractView {
 
     destroy() {
         onChange.unsubscribe(this.appState);
+        onChange.unsubscribe(this.state)
     }
 
-    setUserData(data) {
-        const doc = data.find(doc => doc.id === auth.currentUser?.uid)
+    setUserData(snapshots) {
+        if(!auth.currentUser) {
+            console.warn('User is not authenticated')
+            return
+        }
+
+        const doc = snapshots.find(doc => doc.id === auth.currentUser?.uid)
+
+        if(!doc) {
+            console.warn('User document not found in Firestore')
+            this.state.userData = null;
+            return
+        }
+
         this.state.userData = doc?.data()
-        
         return
     }
 
-    users() {
-        onSnapshot(collection(db, 'users'), (snap) => {
-            this.setUserData(snap.docs)
-        }, (error) => {
-            console.error("onSnapshot error:", error);
+    users = async () => {
+        try {
+            if (!auth.currentUser) {
+                console.warn("User is not authenticated");
+                return;
+            }
+
+            const snapshot = await getDocs(collection(db, 'users'));
+            this.setUserData(snapshot.docs)
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    }
+
+    subToAuth() {
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                location.hash = '#auth';
+                return;
+            }
+
+            this.users();
+            this.render();
         });
     }
 
     render() {
         if(!this.state.userData) {
-            this.users()
-        }
-
-        onAuthStateChanged(auth, user => {
-            if(!user) {
-                location.hash = '#auth'
-                return
-            }
-            
-            this.app.innerHTML = ''
-            this.setTitle('Profile')
-
-            if(!this.state.userData) {
-                this.app.innerHTML = `
+            this.app.innerHTML = `
                     <div class="loading">Loading...</div>
                 `
-                return this.app
-            }
+            return this.app
+        }
+        
+        this.app.innerHTML = ''
+        this.setTitle('Profile')
 
-            const main = document.createElement('div')
-            main.classList.add('main')
+        const main = document.createElement('div')
+        main.classList.add('main')
 
-            main.append(new Account(this.state).render())
-            main.append(new Orders(this.appState, this.state).render())
-            
-            this.app.append(main)
-            this.app.prepend(this.renderHeader())
-        })
+        main.append(new Account(this.state).render())
+        main.append(new Orders(this.appState, this.state).render())
+        
+        this.app.append(main)
+        this.app.prepend(this.renderHeader())
     }
 
     renderHeader() {

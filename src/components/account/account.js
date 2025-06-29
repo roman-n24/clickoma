@@ -9,21 +9,16 @@ export class Account extends DivComponent {
         this.parentState = parentState
     }
 
-    get user() {
-        const user = auth.currentUser
-        return {
-            email: user.email,
-        }
-    }
-
     render() {
         this.element.classList.add('account')
         
+        console.log(this.parentState.userData)
+
         this.element.innerHTML = `
             <h1 class="account__title">Мой профиль</h1>
             <div class="account__info">
                     <div class="user-name">${this.parentState.userData?.name}</div>
-                    <div class="user-email">${this.user.email}</div>
+                    <div class="user-email">${auth.currentUser.email}</div>
             </div>
             <div class="account__interaction-wrapper">
                 <a href="#edit" class="account__change">

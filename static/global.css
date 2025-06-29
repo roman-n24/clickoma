@@ -8,6 +8,7 @@
     --darkened-gray: #475156;
     --gray-price: #77878F;
     --dark-gray: #191C1F;
+    --modern-gray: #333;
     --orange: #FA8232;
     --green: #2DB224;
     --red: #EE5858;
@@ -28,4 +29,8 @@
 
 body {
     margin: 0;
+}
+
+html {
+    height: 100%;
 }

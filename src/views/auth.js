@@ -28,6 +28,7 @@ export class AuthView extends AbstractView {
             setDoc,
             collection
         }
+        this.initAuthListener()
     }
 
     appStateHook = (path) => {
@@ -40,13 +41,18 @@ export class AuthView extends AbstractView {
         onChange.unsubscribe(this.appState);
     }
 
-    render() {
+    initAuthListener() {
         onAuthStateChanged(auth, user => {
-            if(user) {
-                location.hash = '#'
+            if(!user) { 
+                this.render()
                 return
             }
 
+            location.hash = '#profile'
+        })
+    }
+
+    render() {
             this.app.innerHTML = ''
             this.setTitle('Auth')
             
@@ -57,7 +63,6 @@ export class AuthView extends AbstractView {
             
             this.app.append(main)
             this.app.prepend(this.renderHeader())
-        })
     }
 
     renderHeader() {

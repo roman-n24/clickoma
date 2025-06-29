@@ -33,7 +33,7 @@ export class Orders extends DivComponent {
             return `
                 <div class="orders__tb">
                     <div class="tb-order">
-                        <div class="tb-order__id">${item.id}</div>
+                        <div class="tb-order__id">#${item.orderId}</div>
                         <div class="tb-order__status" order-status="in-progress">${item.status.toUpperCase()}</div>
                         <div class="tb-order__date">${new Intl.DateTimeFormat('en-US', dateOptions).format(dataDate)}</div>
                         <div class="tb-order__total">$${item.total} (${item.items.length} Products)</div>
