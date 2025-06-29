@@ -1,17 +1,18 @@
 {
-  "name": "products",
+  "name": "clickoma",
   "version": "1.0.0",
   "description": "Ethernet-shop for bying top products",
   "keywords": [
-    "products"
+    "products",
+    "clickoma"
   ],
-  "homepage": "https://github.com/Nerdffff/products#readme",
+  "homepage": "https://github.com/roman-n24/clickoma",
   "bugs": {
-    "url": "https://github.com/Nerdffff/products/issues"
+    "url": "https://github.com/roman-n24/clickoma/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nerdffff/products.git"
+    "url": "git+https://github.com/roman-n24/clickoma.git"
   },
   "license": "ISC",
   "author": "Roman",
