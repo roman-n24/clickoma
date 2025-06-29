@@ -3,20 +3,7 @@
 
 Веб-приложение интернет-магазина с возможностью просмотра товаров, регистрации, авторизации и оформления заказов. Товары загружаются с внешнего API, заказы сохраняются в Firestore, а подтверждение отправляется по электронной почте.
 
-<div class="slider">
-  <div class="slide"><img src="![Снимок экрана 2025-06-30 004829](https://github.com/user-attachments/assets/d4f17f58-fddd-4c32-8db1-9ec4ebdf748a)
-" alt="Image 1"></div>
-  <div class="slide"><img src="![Снимок экрана 2025-06-30 004859](https://github.com/user-attachments/assets/b133b540-2d6e-4cf5-90a3-c051ec986a97)
-" alt="Image 2"></div>
-  <div class="slide"><img src="![Снимок экрана 2025-06-30 004906](https://github.com/user-attachments/assets/ce6a351c-8adf-40c0-8abf-31d2041801b1)
-" alt="Image 3"></div>
-  <div class="slide"><img src="![Снимок экрана 2025-06-30 004920](https://github.com/user-attachments/assets/1663ba42-0eec-4f53-9dba-0a9521df53fa)
-" alt="Image 3"></div>
-  <div class="slide"><img src="![Снимок экрана 2025-06-30 004959](https://github.com/user-attachments/assets/f1edf547-2906-4b1c-bfde-a7cba83e2be0)
-" alt="Image 3"></div>
-  <button class="prev">&#10094;</button>
-  <button class="next">&#10095;</button>
-</div>
+![Снимок экрана 2025-06-30 004829](https://github.com/user-attachments/assets/b9c26612-1303-41f9-ac09-4bc85c9af5f5)
 
 ## Стек:
 ### Frontend:
