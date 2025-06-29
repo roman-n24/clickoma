@@ -3,7 +3,11 @@
 
 Веб-приложение интернет-магазина с возможностью просмотра товаров, регистрации, авторизации и оформления заказов. Товары загружаются с внешнего API, заказы сохраняются в Firestore, а подтверждение отправляется по электронной почте.
 
-![Снимок экрана 2025-06-30 004829](https://github.com/user-attachments/assets/b9c26612-1303-41f9-ac09-4bc85c9af5f5)
+- ![Снимок экрана 2025-06-30 004829](https://github.com/user-attachments/assets/b9c26612-1303-41f9-ac09-4bc85c9af5f5)
+- ![Снимок экрана 2025-06-30 004859](https://github.com/user-attachments/assets/090f1c5d-dd00-408e-89c4-ad204754fecf)
+- ![Снимок экрана 2025-06-30 004906](https://github.com/user-attachments/assets/6b0abf27-1815-40e3-bf1f-ace0fa7a6f71)
+- ![Снимок экрана 2025-06-30 004920](https://github.com/user-attachments/assets/21ad69ce-5189-4495-861e-baf239a6ff7b)
+- ![Снимок экрана 2025-06-30 004959](https://github.com/user-attachments/assets/13d0ac77-0a46-4bc2-8268-7be7fca0df96)
 
 ## Стек:
 ### Frontend:
