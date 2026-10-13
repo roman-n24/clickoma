@@ -44,8 +44,37 @@
 git clone [https://github.com/roman-n24/clickoma.git](https://github.com/roman-n24/clickoma.git)
 cd clickoma
 npm install
+```
 
-2. Настройка FirebaseЗарегистрируйтесь в Firebase и перейдите в консоль (Go to console).Создайте новый проект.В разделе Authentication включите способ входа по электронной почте и паролю.Создайте базу данных Firestore Database.В Firestore Database создайте две пустые коллекции: orders и users.3. Настройка EmailJSЗарегистрируйтесь в EmailJS.В разделе Email Services создайте новый сервис (Add New Service).Перейдите в раздел Email Templates и создайте новый шаблон.Выберите готовый шаблон Order Confirmation.Перейдите в данный шаблон и нажмите Edit Content (Code Editor).Вставьте следующий HTML-код:HTML<div style="font-family: system-ui, sans-serif, Arial; font-size: 14px; color: #333; padding: 14px 8px; background-color: #f5f5f5;">
+2. Настройка Firebase
+
+    Зарегистрируйтесь в Firebase и перейдите в консоль (Go to console).
+
+    Создайте новый проект.
+
+    В разделе Authentication включите способ входа по электронной почте и паролю.
+
+    Создайте базу данных Firestore Database.
+
+    В Firestore Database создайте две пустые коллекции: orders и users.
+
+3. Настройка EmailJS
+
+    1. Зарегистрируйтесь в EmailJS.
+
+    2. В разделе Email Services создайте новый сервис (Add New Service).
+
+    3. Перейдите в раздел Email Templates и создайте новый шаблон.
+
+    4. Выберите готовый шаблон Order Confirmation.
+
+    5. Перейдите в данный шаблон и нажмите Edit Content (Code Editor).
+
+    6. Вставьте следующий HTML-код:
+
+HTML
+```html
+<div style="font-family: system-ui, sans-serif, Arial; font-size: 14px; color: #333; padding: 14px 8px; background-color: #f5f5f5;">
 <div style="max-width: 600px; margin: auto; background-color: #fff;">
 <div style="border-top: 6px solid #458500; padding: 16px;"><strong>Thank You for Your Order</strong> </span></div>
 <div style="padding: 0 16px;">
@@ -82,7 +111,18 @@ npm install
 <p style="color: #999;">The email was sent to {{email}}<br>You received this email because you placed the order</p>
 </div>
 </div>
-Настройте поля шаблона:   Subject: Order Confirmed #{{order_id}}!To Email: {{email}}From Email: поставьте галочку Use Default Email Address   4. Конфигурация данных (API ключи)   Создайте файл data.json в корне проекта и добавьте в него конфигурацию для Firebase и EmailJS:   JSON{
+```
+   7. Настройте поля шаблона:
+       Subject: ```Order Confirmed #{{order_id}}!```
+       To Email: ```{{email}}```
+       From Email: ```поставьте галочку Use Default Email Address```
+
+4. Конфигурация данных (API ключи)
+
+Создайте файл data.json в корне проекта и добавьте в него конфигурацию для Firebase и EmailJS:
+JSON
+```json
+{
     "firebase": {
         "apiKey": "ВАШ_API_KEY",
         "authDomain": "ВАШ_AUTH_DOMAIN",
@@ -98,6 +138,17 @@ npm install
         "templateKey": "template_..."
     }
 }
-5. ЗапускЗапустите сборку проекта:Bashnpm run build
-Запустите локальный сервер:Bashnpm start
-Автор: Late Q (Роман)Контакты: Telegram
+```
+5. Запуск
+
+Запустите сборку проекта:
+```Bash
+npm run build
+```
+Запустите локальный сервер:
+```Bash
+npm start
+```
+
+Автор: Late Q (Роман)
+Контакты: Telegram
